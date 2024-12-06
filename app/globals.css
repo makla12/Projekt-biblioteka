@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 :root {
-	--background: #ffffff;
+	--background: #edede9;
+	--background2: #e3d5ca;
+	--accent: #fcd34d;
 	--foreground: #171717;
+}
+
+body{
+	background-color: var(--background);
 }
