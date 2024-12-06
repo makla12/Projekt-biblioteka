@@ -1,3 +1,3 @@
-import BooksPage from "@/components/pages/booksPage";
+import BooksPage from "@/components/pages/BooksPage";
 
 export default BooksPage;

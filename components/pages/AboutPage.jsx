@@ -6,6 +6,8 @@ export default function AboutPage() {
 	<>
         <NavBar curentSiteId={1} />
 
+		<div className="w-full h-96"> </div>
+		
 		<Footer />
     </>
   	);

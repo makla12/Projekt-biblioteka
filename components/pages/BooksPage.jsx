@@ -6,6 +6,8 @@ export default function BooksPage() {
 	<>
         <NavBar curentSiteId={2} />
         
+		<div className="w-full h-96"> </div>
+
 		<Footer />
     </>
 	);

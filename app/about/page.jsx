@@ -1,7 +1,3 @@
-import AboutPage from "@/components/pages/aboutPage";
+import AboutPage from "@/components/pages/AboutPage";
 
-export default function page() {
-    return(
-        <AboutPage />
-    );
-}
+export default AboutPage;
