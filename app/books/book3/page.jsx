@@ -1,32 +1,30 @@
 import BookInfo from "@/components/elements/BookInfo";
 
 export default function book(){return (<BookInfo {...{
-    title: "NAZWA KSIĄŻKI",
-    author: "Gal anonim",
-    date: "2022",
-    type: "Akcja",
-    rating: "8/10",
-    about: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta neque sapiente accusamus, temporibus ipsam totam provident nisi sed dolores! Mollitia voluptate enim modi eum culpa! Tenetur cum maxime sit quod.",
+    "title": "Frankenstein",
+    "author": "Mary Shelley",
+    "date": "1818",
+    "type": "Powieść gotycka, horror, science fiction",
+    "rating": "8,1/10",
+    "about": "„Frankenstein, czyli nowoczesny Prometeusz” to klasyczna powieść grozy i jedno z pierwszych dzieł science fiction. Opowiada historię młodego naukowca, Viktora Frankensteina, który w swojej obsesji na punkcie pokonania śmierci tworzy sztuczne życie. Eksperyment kończy się tragicznie, gdy jego dzieło – istota o nadludzkiej sile i inteligencji – zostaje odrzucone przez świat i popada w desperację. Powieść porusza temat granic nauki, moralności oraz konsekwencji ludzkiej pychy.",
     reviews:[
         { 
-            user:"Imię i nazwisko",
-            date:"12-02-2024",
-            rating:"5/10",
-            review: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor voluptatibus inventore ex aut obcaecati consequuntur cupiditate odio ea delectus a iure nihil nesciunt iusto, animi optio eveniet laboriosam quas itaque.",
+            "user": "Karolina Wysocka",
+            "date": "05-02-2024",
+            "rating": "9/10",
+            "review": "Poruszająca opowieść o człowieczeństwie i odpowiedzialności za własne czyny. Potwór Frankensteina to jedna z najbardziej tragicznych postaci w literaturze."
         },
-
         { 
-            user:"",
-            date:"",
-            rating:"",
-            review:"",
+            "user": "Tomasz Grabowski",
+            "date": "07-02-2024",
+            "rating": "7/10",
+            "review": "Świetny klimat gotyckiej grozy, ale momentami książka jest trudna w odbiorze. Mimo wszystko klasyka, którą warto znać!"
         },
-
         { 
-            user:"",
-            date:"",
-            rating:"",
-            review:"",
-        },
+            "user": "Ewa Lis",
+            "date": "09-02-2024",
+            "rating": "8/10",
+            "review": "Frankenstein to coś więcej niż horror – to refleksja nad samotnością i odrzuceniem. Historia potwora wzrusza i przeraża jednocześnie."
+        }
     ],
 }}/>)};
