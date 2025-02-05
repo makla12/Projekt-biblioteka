@@ -1,32 +1,31 @@
 import BookInfo from "@/components/elements/BookInfo";
 
 export default function book(){return (<BookInfo {...{
-    title: "NAZWA KSIĄŻKI",
-    author: "Gal anonim",
-    date: "2022",
-    type: "Akcja",
-    rating: "8/10",
-    about: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta neque sapiente accusamus, temporibus ipsam totam provident nisi sed dolores! Mollitia voluptate enim modi eum culpa! Tenetur cum maxime sit quod.",
+    title: "Pies Baskerville’ów",
+    author: "Arthur Ignatius Conan Doyle",
+    date: "1901-1902",
+    type: "powieść detektywistyczna",
+    rating: "7,4/10",
+    about: "W „Psie Baskervillów” Sherlock Holmes i doktor Watson szukają sprawców morderstw w rodzie Baskervillów. Metodycznie tropią straszliwą bestię i zimnego mordercę, narażając się na mrożące krew w żyłach niebezpieczeństwa na bagnach Grimpen Mire. ",
     reviews:[
         { 
-            user:"Imię i nazwisko",
+            "user": "Anna Nowak",
+            "date": "18-02-2024",
+            "rating": "9/10",
+            "review": "Jedna z moich ulubionych książek Doyle’a! Mroczny klimat, tajemnica i świetne prowadzenie akcji. Polecam każdemu fanowi detektywistycznych zagadek."
+        },
+
+        { 
+            "user": "Jan Kowalski",
+            "date": "15-02-2024",
+            "rating": "7/10",
+            "review": "Ciekawa historia, dobrze poprowadzona intryga, ale momentami zbyt rozwlekłe opisy. Klimat powieści jednak rekompensuje te drobne mankamenty."
+        },
+        { 
+            user:"Niku Tasem",
             date:"12-02-2024",
-            rating:"5/10",
-            review: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor voluptatibus inventore ex aut obcaecati consequuntur cupiditate odio ea delectus a iure nihil nesciunt iusto, animi optio eveniet laboriosam quas itaque.",
-        },
-
-        { 
-            user:"",
-            date:"",
-            rating:"",
-            review:"",
-        },
-
-        { 
-            user:"",
-            date:"",
-            rating:"",
-            review:"",
-        },
+            rating:"8/10",
+            review: "Z każdym kolejnym przeczytanym tomem coraz bardziej rozumiem czemu ta seria jest ponadczasowa. ",
+        }
     ],
 }}/>)};
