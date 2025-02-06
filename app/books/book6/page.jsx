@@ -1,7 +1,9 @@
 import BookInfo from "@/components/elements/BookInfo";
+import placeHolder from "@/public/placeHolderImage.png";
 
 export default function book(){return (<BookInfo {...{
     "title": "Wesele",
+    image: placeHolder,
     "author": "Stanisław Wyspiański",
     "date": "1901",
     "type": "Dramat symboliczny",

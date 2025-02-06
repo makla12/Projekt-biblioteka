@@ -1,7 +1,9 @@
 import BookInfo from "@/components/elements/BookInfo";
+import placeHolder from "@/public/placeHolderImage.png";
 
 export default function book(){return (<BookInfo {...{
     "title": "Frankenstein",
+    image: placeHolder,
     "author": "Mary Shelley",
     "date": "1818",
     "type": "Powieść gotycka, horror, science fiction",

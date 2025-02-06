@@ -2,7 +2,7 @@ import NavBar from "../elements/NavBar";
 import Footer from "../elements/Footer";
 
 export default function TechHelpPage() {
-  	return (
+	return (
 	<>
         <NavBar curentSiteId={3} />
         
@@ -10,5 +10,5 @@ export default function TechHelpPage() {
 
 		<Footer />
     </>
-  	);
+	);
 }
