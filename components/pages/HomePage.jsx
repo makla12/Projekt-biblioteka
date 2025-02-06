@@ -5,7 +5,7 @@ import Footer from "../elements/Footer";
 import ChatContainer from "../elements/ChatContainer";
 
 export default function HomePage() {
-  	return (
+	return (
 	<>
 		<ChatContainer />
         <NavBar curentSiteId={0} />
@@ -14,5 +14,5 @@ export default function HomePage() {
 
         <Footer />
     </>
-  	);
+	);
 }

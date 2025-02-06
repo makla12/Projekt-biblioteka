@@ -15,15 +15,15 @@ export default function NavBar({ curentSiteId }){
             <div className="flex gap-5 text-lg font-bold text-center">
                 <Link href="/" className={(curentSiteId == 0 ? "text-blue-600" : null)}> Strona główna </Link>
 
-                <div className="w-[3px] h-full bg-black"></div>
+                <div className="w-[3px] h-full bg-[var(--foreground)]"></div>
 
                 <Link href="/about" className={(curentSiteId == 1 ? "text-blue-600" : null)}> O nas </Link>
 
-                <div className="w-[3px] h-full bg-black"></div>
+                <div className="w-[3px] h-full bg-[var(--foreground)]"></div>
 
                 <Link href="/books" className={(curentSiteId == 2 ? "text-blue-600" : null)}> Nasze książki </Link>
 
-                <div className="w-[3px] h-full bg-black"></div>
+                <div className="w-[3px] h-full bg-[var(--foreground)]"></div>
 
                 <Link href="/techHelp" className={(curentSiteId == 3 ? "text-blue-600" : null)}> Pomoc techniczna </Link>
             </div>

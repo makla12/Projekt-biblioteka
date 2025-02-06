@@ -3,10 +3,9 @@ import Footer from "./Footer";
 import Review from "./Review";
 import Image from "next/image";
 import backArrow from "@/public/back-arrow.svg";
-import placeHolder from "@/public/placeHolderImage.png";
 import Link from "next/link";
 
-export default function BookInfo({ title, author, date, type, rating, about, reviews }){
+export default function BookInfo({ title, author, date, type, rating, about, reviews, image }){
     return(
     <>
         <div className="w-full h-full top-0 left-0 bg-[var(--background)] fixed cursor-default overflow-x-scroll">
@@ -15,13 +14,13 @@ export default function BookInfo({ title, author, date, type, rating, about, rev
             <div className="h-auto px-16 py-4">
                 <div className="w-16">
                     <Link href={"/books"}>
-                        <Image src={backArrow} alt="" className="w-full aspect-square cursor-pointer" />
+                        <Image src={backArrow} alt="" className="w-full aspect-square cursor-pointer dark:invert" />
                     </Link>
                 </div>
 
                 <div className="w-full px-20">
                     <div className="flex h-96">
-                        <Image src={placeHolder} alt="" className="w-72 h-full mr-2" />
+                        <Image src={image} alt="" className="w-72 h-full mr-2" />
                         
                         <div className="h-full flex flex-col justify-between py-2 text-2xl font-bold">
                             <div>{title}</div>

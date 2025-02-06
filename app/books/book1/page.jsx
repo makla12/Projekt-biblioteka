@@ -1,7 +1,9 @@
 import BookInfo from "@/components/elements/BookInfo";
+import placeHolder from "@/public/placeHolderImage.png";
 
 export default function book(){return (<BookInfo {...{
     title: "Pies Baskerville’ów",
+    image: placeHolder,
     author: "Arthur Ignatius Conan Doyle",
     date: "1901-1902",
     type: "powieść detektywistyczna",

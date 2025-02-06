@@ -1,7 +1,9 @@
 import BookInfo from "@/components/elements/BookInfo";
+import placeHolder from "@/public/placeHolderImage.png";
 
 export default function book(){return (<BookInfo {...{
     title: "Widmo nad Innsmouth",
+    image: placeHolder,
     author: "H.P. Lovecraft",
     date: "1931",
     type: "Horror",

@@ -1,7 +1,9 @@
 import BookInfo from "@/components/elements/BookInfo";
+import placeHolder from "@/public/placeHolderImage.png";
 
 export default function book(){return (<BookInfo {...{
     "title": "Dziady cz. II",
+    image: placeHolder,
     "author": "Adam Mickiewicz",
     "date": "1823",
     "type": "Dramat romantyczny",
