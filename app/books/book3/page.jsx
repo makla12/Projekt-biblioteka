@@ -9,10 +9,10 @@ export default function book(){return (<BookInfo {...{
     "about": "„Frankenstein, czyli nowoczesny Prometeusz” to klasyczna powieść grozy i jedno z pierwszych dzieł science fiction. Opowiada historię młodego naukowca, Viktora Frankensteina, który w swojej obsesji na punkcie pokonania śmierci tworzy sztuczne życie. Eksperyment kończy się tragicznie, gdy jego dzieło – istota o nadludzkiej sile i inteligencji – zostaje odrzucone przez świat i popada w desperację. Powieść porusza temat granic nauki, moralności oraz konsekwencji ludzkiej pychy.",
     reviews:[
         { 
-            "user": "Karolina Wysocka",
+            "user": "Mistrz Odwrócony",
             "date": "05-02-2024",
             "rating": "9/10",
-            "review": "Poruszająca opowieść o człowieczeństwie i odpowiedzialności za własne czyny. Potwór Frankensteina to jedna z najbardziej tragicznych postaci w literaturze."
+            "review": "Wraz z rokiem publikacji rozpoczyna się wolność"
         },
         { 
             "user": "Tomasz Grabowski",
