@@ -12,7 +12,7 @@ export default function NavBar({ curentSiteId }){
                 <div className="text-3xl text-blue-800 font-bold text-center">Electric library</div>
             </div>
 
-            <div className="flex gap-5 text-lg font-bold text-center">
+            <div className="flex sm:gap-5 gap-2 text-lg font-bold text-center">
                 <Link href="/" className={(curentSiteId == 0 ? "text-blue-600" : null)}> Strona główna </Link>
 
                 <div className="w-[3px] h-full bg-[var(--foreground)]"></div>
