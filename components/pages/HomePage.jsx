@@ -2,7 +2,7 @@
 
 import NavBar from "../elements/NavBar";
 import Footer from "../elements/Footer";
-import ChatContainer from "../elements/ChatContainer";
+import ChatContainer from "../elements/chat/ChatContainer";
 
 export default function HomePage() {
 	return (
