@@ -1,7 +1,7 @@
-import Image from "next/image";
-import sendIcon from "@/public/send.svg";
 import dialogs from "./dialogs";
+import ChatInput from "./ChatInput";
 import { useEffect, useState } from "react";
+import ChatBooba from "./ChatBooba";
 
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -49,21 +49,20 @@ export default function Chat() {
     return (
     <>
         <div className="w-full h-full felx flex-col-reverse justify-end p-2">
-            <div className="w-full h-[86vh] bg-red-600 overflow-y-auto ">
-            <div>a</div> <div>a</div> <div>a</div> <div>a</div> <div>a</div> <div>a</div> <div>a</div>
+            <div className="w-full h-[86vh] bg-red-600 overflow-y-auto felx flex-row">
+                <ChatBooba />
             </div>
 
-            <div className="w-full h-[6%] p-1 gap-5 bg-green-600 flex items-center justify-center overflow-auto">
+            <div className="w-full h-[6%] p-1 gap-2 bg-green-600 flex overflow-x-auto mt-1">
             {!dialogPath ? null :
-                <form onSubmit={(e)=>{e.preventDefault()}}>
-                    <div className="w-full flex gap-2">
-                        <input type="text" className="flex-grow bg-background rounded-md p-1" />
-                        <button className="w-8 p-1 rounded-md aspect-square bg-background flex justify-center items-center">
-                            <Image src={sendIcon} alt="" className="w-full h-full dark:invert" />
-                        </button>
-                    </div>
-                </form>
+            <>
+                {/* <ChatInput isInput={false} description={"dsajdashg"} />
+                <ChatInput isInput={false} description={"dsajdashg"} />
+                <ChatInput isInput={false} description={"dsajdashg"} /> */}
+                <ChatInput isInput={true} description={"dsajdashg"} />
+            </>
             }
+            
             </div>
         </div>
     </>
