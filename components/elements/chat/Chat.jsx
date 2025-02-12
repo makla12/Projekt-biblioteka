@@ -44,7 +44,7 @@ export default function Chat() {
 
     useEffect(()=>{
         if(dialogPath){
-            console.log(dialogs);
+            console.log(dialogs.filter((value)=>value.path == dialogPath));
             console.log(chatHistory);
             console.log(inventory);
         }
@@ -54,17 +54,20 @@ export default function Chat() {
     <>
         <div className="w-full h-full felx flex-col-reverse justify-end p-2">
             <div className="w-full h-[86vh] overflow-y-auto flex flex-col-reverse gap-y-1">
-                <div className="w-fit max-w-64 h-auto bg-blue-400 dark:bg-blue-500 py-2 px-4 rounded-3xl text-lg self-end">Halo jest tam kotoś</div>
-                <div className="w-fit max-w-64 h-auto bg-slate-300 dark:bg-zinc-800 py-2 px-4 rounded-3xl text-lg">Halo jest tam kotoś</div>
+                <ChatBooba message={"Jebać rudego"} self={true} />
+                <ChatBooba message={"Jebać rudego"} self={false} />
+                <ChatBooba message={"Jebać rudego"} self={false} />
             </div>
 
-            <div className="w-full h-[6%] p-1 gap-5 flex items-center overflow-x-auto mt-1">
+            <div className="w-full h-auto gap-5 flex items-center overflow-x-auto my-8">
             {!dialogPath ? null :
             <>
-                {/* <ChatInput isInput={false} description={"dsajdashg"} />
-                <ChatInput isInput={false} description={"dsajdashg"} />
-                <ChatInput isInput={false} description={"dsajdashg"} /> */}
-                <ChatInput isInput={true} description={"dsajdashg"} />
+                <ChatInput isInput={false} description={"Jebać rudego"} />
+                <ChatInput isInput={false} description={"Jebać rudego"} />
+                <ChatInput isInput={false} description={"Jebać rudego"} />
+                <ChatInput isInput={false} description={"Jebać rudego"} />
+                <ChatInput isInput={false} description={"Jebać rudego"} />
+                {/* <ChatInput isInput={true} description={"Jebać rudego"} /> */}
             </>
             }
             
