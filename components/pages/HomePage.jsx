@@ -1,8 +1,8 @@
 'use client'
 
+import ChatContainer from "../elements/chat/ChatContainer";
 import NavBar from "../elements/NavBar";
 import Footer from "../elements/Footer";
-import ChatContainer from "../elements/chat/ChatContainer";
 
 export default function HomePage() {
 	return (

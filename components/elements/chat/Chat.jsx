@@ -26,34 +26,39 @@ function getCookie(cname) {
 }
 
 export default function Chat() {
-    const [chatHisory, setChatHistory] = useState(null);
     const [dialogPath, setDialogPath] = useState(null);
     const [inventory, setInventory] = useState(null);
+    const [chatHistory, setChatHistory] = useState(null);
     
     useEffect(()=>{
-        if(getCookie("location").length == 0 || getCookie("inventory").length == 0){
+        if(getCookie("location").length == 0 || getCookie("inventory").length == 0 || getCookie("chatHistory")){
             setCookie("location", "/", 365);
-            setCookie("inventory", JSON.stringify({inventory:[]}));
+            setCookie("inventory", JSON.stringify({inv:[]}));
+            setCookie("chatHistory", JSON.stringify({hist:[]}));
         }
 
         setDialogPath(getCookie("location"));
-        setInventory(JSON.parse(getCookie("inventory")));
+        setInventory(JSON.parse(getCookie("inventory")).inv);
+        setChatHistory(JSON.parse(getCookie("chatHistory")).hist);
     },[]);
 
     useEffect(()=>{
         if(dialogPath){
-            console.log(dialogs.filter(value => value.path == dialogPath));
+            console.log(dialogs);
+            console.log(chatHistory);
+            console.log(inventory);
         }
-    },[dialogPath])
+    },[dialogPath, chatHistory, inventory])
     
     return (
     <>
         <div className="w-full h-full felx flex-col-reverse justify-end p-2">
-            <div className="w-full h-[86vh] bg-red-600 overflow-y-auto ">
-            <div>a</div> <div>a</div> <div>a</div> <div>a</div> <div>a</div> <div>a</div> <div>a</div>
+            <div className="w-full h-[86vh] overflow-y-auto flex flex-col-reverse gap-y-1">
+                <div className="w-fit max-w-64 h-auto bg-blue-400 dark:bg-blue-500 py-2 px-4 rounded-3xl text-lg self-end">Halo jest tam kotoś</div>
+                <div className="w-fit max-w-64 h-auto bg-slate-300 dark:bg-zinc-800 py-2 px-4 rounded-3xl text-lg">Halo jest tam kotoś</div>
             </div>
 
-            <div className="w-full h-[6%] p-1 gap-5 bg-green-600 flex items-center justify-center overflow-auto">
+            <div className="w-full h-[6%] p-1 gap-5 flex items-center overflow-x-auto">
             {!dialogPath ? null :
                 <form onSubmit={(e)=>{e.preventDefault()}}>
                     <div className="w-full flex gap-2">

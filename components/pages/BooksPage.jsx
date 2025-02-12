@@ -1,3 +1,6 @@
+'use client'
+
+import ChatContainer from "../elements/chat/ChatContainer";
 import NavBar from "../elements/NavBar";
 import Footer from "../elements/Footer";
 import BookLink from "../elements/BookLink";
@@ -6,6 +9,7 @@ import placeHolder from "@/public/placeHolderImage.png";
 export default function BooksPage() {
 	return (
 	<>
+		<ChatContainer />
         <NavBar curentSiteId={2} />
         
 		<div className="w-full h-auto px-12 py-5 flex justify-center gap-x-96 gap-y-20 flex-wrap">
