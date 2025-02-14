@@ -4,7 +4,14 @@ const dialogs = [
         "description":"Tak",
         "input":false,
         "path":"/",
-        "action":"dailog /goto"
+        "action":"message No i git;dialog /startDialog2"
+    },
+
+    {
+        "description":"Nie",
+        "input":false,
+        "path":"/",
+        "action":"message Rudy cel;dailog /"
     },
 
     //Biblioteka

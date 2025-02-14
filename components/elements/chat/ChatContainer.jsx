@@ -21,7 +21,7 @@ export default function ChatContainer(){
 
         <div onClick={()=>setIsShown(false)} className={`w-full h-[100vh] backdrop-blur-sm fixed right-0 top-0 ${!isShown ? "translate-x-full" : "translate-x-0"}`}></div>
         
-        <div className={`
+        <div id="chat" className={`
             w-full h-full sm:w-[30rem] fixed right-0 top-0 flex flex-col items-end p-1
             sm:rounded-s-lg bg-blue-500 dark:bg-blue-700 transition-transform duration-500 overflow-y-auto ${!isShown ? "translate-x-full" : "translate-x-0"}`}
         >
