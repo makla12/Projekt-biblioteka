@@ -53,13 +53,13 @@ export default function Chat() {
     return (
     <>
         <div className="w-full h-full felx flex-col-reverse justify-end p-2">
-            <div className="w-full h-[86vh] overflow-y-auto flex flex-col-reverse gap-y-1">
+            <div className="w-full h-[83vh] overflow-y-auto flex flex-col-reverse gap-y-1 chatScroll">
                 <ChatBooba message={"Jebać rudego"} self={true} />
                 <ChatBooba message={"Jebać rudego"} self={false} />
                 <ChatBooba message={"Jebać rudego"} self={false} />
             </div>
 
-            <div className="w-full h-auto gap-5 flex items-center overflow-x-auto my-8">
+            <div className="w-full h-auto gap-5 flex items-center overflow-x-auto my-8 pb-2 chatScroll">
             {!dialogPath ? null :
             <>
                 <ChatInput isInput={false} description={"Jebać rudego"} />
