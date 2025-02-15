@@ -1,4 +1,4 @@
-import BookInfo from "@/components/elements/BookInfo";
+import BookInfo from "@/components/pages/BookInfo";
 import placeHolder from "@/public/placeHolderImage.png";
 
 export default function book(){return (<BookInfo {...{

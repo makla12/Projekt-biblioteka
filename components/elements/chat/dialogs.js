@@ -2,78 +2,78 @@ const dialogs = [
     //Początkowy dialog
     {
         "description":"Tak",
-        "input":false,
+        "isInput":false,
         "path":"/",
-        "action":"message No i git;dialog /startDialog2"
+        "action":"message:No i git;dialog:/startDialog2"
     },
 
     {
         "description":"Nie",
-        "input":false,
+        "isInput":false,
         "path":"/",
-        "action":"message Rudy cel;dailog /"
+        "action":"message:Rudy cel;dialog:/"
     },
 
     //Biblioteka
     {
         "description":"Idz do...",
-        "input":false,
+        "isInput":false,
         "path":"/biblioteka",
-        "action":"dailog /goto"
+        "action":"dailog:/goto"
     },
 
     {
         "description":"307",
-        "input":false,
+        "isInput":false,
         "path":"/biblioteka/goto",
-        "action":"goto 307"
+        "action":"dilog:/307"
     },
     {
         "description":"101",
-        "input":false,
+        "isInput":false,
         "path":"/biblioteka/goto",
-        "action":"goto 101"
+        "action":"dialog:/101"
     },
     {
         "description":"214",
-        "input":false,
+        "isInput":false,
         "path":"/biblioteka/goto",
-        "action":"goto 214"
+        "action":"dialog:/214"
     },
 
 
     {
         "description":"Rozwiąż zakadkę numer 1",
-        "input":false,
+        "isInput":false,
         "path":"/biblioteka",
-        "action":"dialog /puzle1"
+        "action":"dialog:/puzle1"
     },
     {
         "description":"Wpisz rozwiązanie zagadki",
-        "input":true,
+        "isInput":true,
         "path":"/biblioteka/puzle1",
-        "action":"solve puzle1"
+        "action":"solve:puzle1"
     },
 
     //307 (Programowanie)
     {
         "description":"Idz do...",
-        "input":false,
+        "isInput":false,
         "path":"/307",
-        "action":"dailog /goto"
+        "action":"dailog:/goto"
     },
 
     {
         "description":"307",
-        "input":false,
+        "isInput":false,
         "path":"/307/goto",
-        "action":"goto 307"
+        "action":"dialog:/307"
     },
     {
         "description":"101",
-        "input":false,
+        "isInput":false,
         "path":"/307/goto",
-        "action":"goto 101"
+        "action":"dialog:/101"
     }
 ]
 
