@@ -1,14 +1,17 @@
-import NavBar from "./NavBar";
-import Footer from "./Footer";
-import Review from "./Review";
+'use client'
+import NavBar from "../elements/NavBar";
+import Footer from "../elements/Footer";
+import Review from "../elements/Review";
 import Image from "next/image";
 import backArrow from "@/public/back-arrow.svg";
 import Link from "next/link";
+import ChatContainer from "../elements/chat/ChatContainer";
 
 export default function BookInfo({ title, author, date, type, rating, about, reviews, image }){
     return(
     <>
-        <div className="w-full h-full top-0 left-0 bg-[var(--background)] fixed cursor-default overflow-x-scroll">
+        <div className="w-full h-full top-0 left-0 bg-[var(--background)] fixed cursor-default overflow-x-auto">
+            <ChatContainer />
             <NavBar curentSiteId={2} />
 
             <div className="h-auto sm:px-16 px-2 py-4 ">
