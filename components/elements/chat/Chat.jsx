@@ -39,61 +39,113 @@ const updateChatHistory = (obj) => {
     setCookie("chatHistory", JSON.stringify({hist:[...JSON.parse(getCookie("chatHistory")).hist, obj]}));
 }
 
+const updateInventory = (obj) => {
+    setCookie("inventory", JSON.stringify({inv:[...JSON.parse(getCookie("inventory")).inv, obj]}));
+}
+
 export default function Chat() {
     const [dialogPath, setDialogPath] = useState(null);
     const [inventory, setInventory] = useState(null);
     const [chatMessages, setChatMessages] = useState(null);
 
-    const interpretAction = (actionList) => {
+    const interpretAction = async (actionList, message) => {
         const actions = actionList.split(";");
+        setChatMessages(prev => [...prev, {message:message, self:true}]);
+        updateChatHistory({message:message, self:true});
+        setDialogPath(null);
+        //Save cookies
+        let breakLoop = false;
+        for(let i=0; i < actions.length; i++){
+            if(breakLoop) break;
+            const action = actions[i];
+            const actionType = action.split(":")[0].trim();
+            const actionValue = action.split(":")[1].trim();
+            switch(actionType){
+                case "check":
+                    const [itemToCheck, path, failMessage] = actionValue.split(",");
+                    if(!inventory.includes(itemToCheck)){
+                        breakLoop = true;
+                        updateChatHistory({message:failMessage, self:false});
+                        setCookie("location", path);
+                    }
+                    break;
 
-        const sendMessage = async (message) => {
-            setChatMessages(prev => [...prev, {message:message, self:true}]);
-            updateChatHistory({message:message, self:true});
-            setDialogPath(null);
-            //Save cookies
-            actions.forEach(action => {
-                const actionType = action.split(":")[0];
-                const actionValue = action.split(":")[1];
-                switch(actionType){
-                    case "message":
-                        updateChatHistory({message:actionValue, self:false});
-                        break;
-                    case "dialog":
-                        setCookie("location", actionValue);
-                        break;
-                    default:
-                        break;
-                }
-            });
+                case "solve":
+                    const [newItem, oldPath, succesMessage, answer] = actionValue.split(",");
+                    if(message == answer){
+                        updateChatHistory({message:succesMessage, self:false});
+                        updateInventory(prev => [...prev, newItem]);
+                    }
+                    else{
+                        updateChatHistory({message:"To nie to", self:false});
+                    }
+                    setCookie("location", oldPath);
+                    break;
 
-            //Change visuals
-            for(let i=0; i<actions.length; i++){
-                const action = actions[i];
-                const actionType = action.split(":")[0];
-                const actionValue = action.split(":")[1];
-                switch(actionType){
-                    case "message":
-                        await delay(500);
-                        setChatMessages(prev => [...prev, {message:actionValue, self:false}]);
-                        break;
-                    case "dialog":
-                        setDialogPath(actionValue);
-                        break;
-                    default:
-                        break;
-                }
+                case "message":
+                    updateChatHistory({message:actionValue, self:false});
+                    break;
+
+                case "dialog":
+                    setCookie("location", actionValue);
+                    break;
+
+                default:
+                    break;
             }
         };
 
-        return sendMessage;
+        //Change visuals
+        breakLoop = false;
+        for(let i=0; i < actions.length; i++){
+            if(breakLoop) break;
+            const action = actions[i];
+            const actionType = action.split(":")[0].trim();
+            const actionValue = action.split(":")[1].trim();
+            switch(actionType){
+                case "check":
+                    const [itemToCheck, path, failMessage] = actionValue.split(",");
+                    if(!inventory.includes(itemToCheck)){
+                        breakLoop = true;
+                        await delay(500);
+                        setChatMessages(prev => [...prev, {message:failMessage, self:false}]);
+                        setDialogPath(path);
+                    }
+                    break;
+
+                case "solve":
+                    const [newItem, oldPath, succesMessage, answer] = actionValue.split(",");
+                    await delay(500);
+                    if(message == answer){
+                        setChatMessages(prev => [...prev, {message:succesMessage, self:false}]);
+                        setInventory(prev => [...prev, newItem]);
+                    }
+                    else{
+                        setChatMessages(prev => [...prev, {message:"To nie to", self:false}]);
+                    }
+                    setDialogPath(oldPath);
+                    break;
+
+                case "message":
+                    await delay(500);
+                    setChatMessages(prev => [...prev, {message:actionValue, self:false}]);
+                    break;
+
+                case "dialog":
+                    setDialogPath(actionValue);
+                    break;
+
+                default:
+                    break;
+            }
+        }
     };
     
     useEffect(()=>{
         if(getCookie("location").length == 0 || getCookie("inventory").length == 0 || getCookie("chatHistory").length == 0){
-            setCookie("location", "/");
+            setCookie("location", "/startDialog");
             setCookie("inventory", JSON.stringify({inv:[]}));
-            setCookie("chatHistory", JSON.stringify({hist:[{message:"Pomożesz mi?", self:false}]}));
+            setCookie("chatHistory", JSON.stringify({hist:[{message:"Pomocy utknąłem w szkole", self:false},{message:"Pomożesz mi?", self:false}]}));
         }
 
         setDialogPath(getCookie("location"));
