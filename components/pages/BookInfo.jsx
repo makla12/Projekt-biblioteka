@@ -1,4 +1,3 @@
-'use client'
 import NavBar from "../elements/NavBar";
 import Footer from "../elements/Footer";
 import Review from "../elements/Review";
