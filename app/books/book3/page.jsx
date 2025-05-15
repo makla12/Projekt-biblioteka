@@ -14,7 +14,8 @@ export default function book(){return (<BookInfo {...{
             "user": "Mistrz Odwrócony",
             "date": "05-02-2024",
             "rating": "9/10",
-            "review": "Wraz z rokiem publikacji rozpoczyna się wolność"
+            "review": "Wraz z rokiem publikacji rozpoczyna się wolność",
+            "reversed": true
         },
         { 
             "user": "Tomasz Grabowski",

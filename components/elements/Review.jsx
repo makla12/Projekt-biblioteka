@@ -1,4 +1,4 @@
-export default function Review({ user, date, rating, review }){
+export default function Review({ user, date, rating, review, reversed = false }){
     return(
     <>
         <div className="sm:w-[80%] w-[100%] sm:h-40 h-auto bg-[var(--background2)] p-2">
@@ -14,7 +14,7 @@ export default function Review({ user, date, rating, review }){
 
             <div className="w-full h-0.5 my-2 bg-black" />
 
-            <div className="whitespace-pre-wrap">{review}</div>
+            <div className={`whitespace-pre-wrap ${reversed ? "scale-x-[-1] text-right" : ""}`}>{review}</div>
         </div>
     </>
     );

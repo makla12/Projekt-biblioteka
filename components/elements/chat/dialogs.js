@@ -62,22 +62,19 @@ const dialogs = [
         description: "Spróbuj otworzyć drzwi.",
         isInput: false,
         path: "/biblioteka",
+        ifNotHas: ["drzwi_otwarte"],
         actions: [
             // Można tu dodać logikę sprawdzania klucza, np.:
-            /*
-            () => checkInventory("klucz_mosiezny", [
+            
+            () => checkInventory("klucz_do_biblioteki", [
                  // Jeśli NIE MA klucza:
-                 () => message("Już próbowałam chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),
-                 () => goToDialogPath("/biblioteka"),
+                () => message("Już próbowałam chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),
+                () => goToDialogPath("/biblioteka"),
             ]),
             // Jeśli MA klucz (kod wykona się, jeśli checkInventory nie przerwie):
             () => message("Chwila, mam ten mosiężny klucz! Spróbuję go użyć..."),
             () => message("Pasuje! Przekręcam... Drzwi otwarte! Możemy iść dalej!"),
-            // Tutaj np. przejście do korytarza lub wygrana?
-            // () => goToDialogPath("/korytarz_glowny"),
-            */
-            // Uproszczona wersja bez sprawdzania klucza na razie:
-            () => message("Już próbowałam chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Na pewno nie otworzę go siłą. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),
+            () => giveItem("drzwi_otwarte"), // Dodajemy flagę do ekwipunku gracza
             () => goToDialogPath("/biblioteka"), // Pozostajemy w bibliotece
         ]
     },
@@ -95,16 +92,19 @@ const dialogs = [
     {
         description: "Poszukaj czegoś nietypowego na półkach.", // Rozpoczęcie ścieżki z pudełkiem
         isInput: false,
+        ifNotHas: ["pudelko_znalezione"], // Pojawia się tylko jeśli gracz NIE MA flagi "pudelko_znalezione"
         path: "/biblioteka",
         actions: [
             () => message("Rozglądam się uważnie między regałami... Czekaj! Tutaj, na niższej półce za rzędem encyklopedii, stoi małe, drewniane pudełko. Wygląda na stare."),
-            () => goToDialogPath("/biblioteka/pudelko_znalezione"),
+            () => giveItem("pudelko_znalezione"), // Dodanie flagi do ekwipunku gracza
+            () => goToDialogPath("/biblioteka"),
         ]
     },
     {
         description: "Idź do...", // Nawigacja
         isInput: false,
         path: "/biblioteka",
+        ifHas: ["drzwi_otwarte"], 
         actions: [
             () => goToDialogPath("/biblioteka/goto"),
         ]
@@ -138,19 +138,12 @@ const dialogs = [
     {
         description: "Przyjrzyj się temu pudełku.",
         isInput: false,
-        path: "/biblioteka/pudelko_znalezione",
+        path: "/biblioteka",
+        ifHas: ["pudelko_znalezione"], // Pojawia się tylko jeśli gracz ma flagę "pudelko_znalezione"
+        ifNotHas: ["klucz_do_biblioteki"], // Pojawia się tylko jeśli gracz NIE MA flagi "klucz_do_biblioteki"
         actions: [
             () => message("Jest dość ciężkie, z ciemnego drewna. Nie ma dziurki na klucz, ale z przodu widzę mały zamek szyfrowy na cztery cyfry. Na wieczku jest coś wyryte."),
             () => goToDialogPath("/biblioteka/pudelko_opis"),
-        ]
-    },
-    {
-        description: "Zostaw je na razie, rozejrzyj się gdzie indziej.", // Opcja powrotu
-        isInput: false,
-        path: "/biblioteka/pudelko_znalezione",
-        actions: [
-            () => message("Okej, zostawiam pudełko. Czego mam szukać dalej?"),
-            () => goToDialogPath("/biblioteka"),
         ]
     },
 
@@ -160,8 +153,17 @@ const dialogs = [
         isInput: false,
         path: "/biblioteka/pudelko_opis",
         actions: [
-            () => message("Napis głosi: 'Sekret tkwi w głosach czytelników, tam gdzie lustro prawdę Ci powie. Szukaj opinii o ostatniej podróży Kapitana Nemo.' Hmm, brzmi jak zagadka."),
-            () => goToDialogPath("/biblioteka/pudelko_zagadka"),
+            () => message("Napis głosi: 'Sekret tkwi w głosach czytelników, tam gdzie lustro prawdę Ci powie. Szukaj opinii o ostatnich eksperymentach Frankensteina.' Hmm, brzmi jak zagadka."),
+            () => goToDialogPath("/biblioteka/pudelko_opis"),
+        ]
+    },
+    {
+        description: "Ok chyba znam kod",
+        isInput: false,
+        path: "/biblioteka/pudelko_opis",
+        actions: [
+            () => message("Okej, słucham uważnie. Jaki kod mam wpisać?"),
+            () => goToDialogPath("/biblioteka/wpisz_kod"),
         ]
     },
     {
@@ -183,75 +185,27 @@ const dialogs = [
         ]
     },
 
-    // --- Stan: Zagadka pudełka (/biblioteka/pudelko_zagadka) ---
-    {
-        description: "Rozumiem wskazówkę. Podaję kod.",
-        isInput: false,
-        path: "/biblioteka/pudelko_zagadka",
-        actions: [
-            () => message("Okej, słucham uważnie. Jaki kod mam wpisać?"),
-            () => goToDialogPath("/biblioteka/wpisz_kod"),
-        ]
-    },
-    {
-        description: "Powtórz wskazówkę z pudełka.",
-        isInput: false,
-        path: "/biblioteka/pudelko_zagadka",
-        actions: [
-            () => message("Jasne, na pudełku jest napisane: 'Sekret tkwi w głosach czytelników, tam gdzie lustro prawdę Ci powie. Szukaj opinii o ostatniej podróży Kapitana Nemo.'"),
-            () => goToDialogPath("/biblioteka/pudelko_zagadka"),
-        ]
-    },
-    {
-        description: "Zajmę się tym później, rozejrzyjmy się jeszcze.", // Opcja powrotu
-        isInput: false,
-        path: "/biblioteka/pudelko_zagadka",
-        actions: [
-            () => message("Dobra, może coś innego rzuci się w oczy."),
-            () => goToDialogPath("/biblioteka"),
-        ]
-    },
-
     // --- Stan: Wpisywanie kodu (/biblioteka/wpisz_kod) ---
     {
         description: "Wpisz kod:",
         isInput: true,
         path: "/biblioteka/wpisz_kod",
         actions: [
-            ({messageInput}) => solvePuzzle("5432", messageInput, { // Rozwiązanie "5432"
+            ({messageInput}) => solvePuzzle("1818", messageInput, { // Rozwiązanie "1818"
                 success: [
                     () => message(`Wpisuję ${messageInput}... Słychać klik! Zamek puścił! Pudełko otwarte!`),
                     () => message("A w środku... jest mały, mosiężny klucz! Wygląda na ważny."),
-                    () => giveItem("klucz_mosiezny"),
+                    () => giveItem("klucz_do_biblioteki"), // Dodanie klucza do ekwipunku gracza
                     () => message("Super! Mam klucz! Co teraz?"),
                     () => goToDialogPath("/biblioteka"),
                 ],
                 fail: [
                     () => message(`Wpisałem/am ${messageInput}... Niestety, nic się nie dzieje. Zamek nadal trzyma. To musi być zły kod. Sprawdź dokładnie wskazówkę i może poszukaj tych 'opinii' w internecie? Pamiętaj o 'lustrze'.`),
-                    () => goToDialogPath("/biblioteka/wpisz_kod"),
+                    () => goToDialogPath("/biblioteka/pudelko_opis"),
                 ],
             }),
         ]
     },
-    {
-        description: "Przypomnij wskazówkę z pudełka.",
-        isInput: false,
-        path: "/biblioteka/wpisz_kod",
-        actions: [
-            () => message("Na pudełku jest napis: 'Sekret tkwi w głosach czytelników, tam gdzie lustro prawdę Ci powie. Szukaj opinii o ostatniej podróży Kapitana Nemo.'"),
-            () => goToDialogPath("/biblioteka/wpisz_kod"),
-        ]
-    },
-    {
-        description: "Jednak nie teraz, wróćmy do biblioteki.", // Opcja powrotu
-        isInput: false,
-        path: "/biblioteka/wpisz_kod",
-        actions: [
-            () => message("Okej, zostawiam na razie to pudełko."),
-            () => goToDialogPath("/biblioteka"),
-        ]
-    },
-
     // === POD-ŚCIEŻKA NAWIGACJI (/biblioteka/goto) ===
     {
         description: "Jednak nie ważne.", // Opcja anulowania nawigacji
@@ -267,12 +221,6 @@ const dialogs = [
         isInput: false,
         path: "/biblioteka/goto",
         actions: [
-            // Sprawdzenie, czy gracz ma klucz (jeśli jest potrzebny do wyjścia z biblioteki lub wejścia do sali)
-            () => checkInventory("klucz_mosiezny", [
-                 // Akcje jeśli NIE MA klucza
-                 () => message("Chyba potrzebuję klucza, żeby stąd wyjść lub otworzyć drzwi do tej sali. Drzwi biblioteki nadal są zamknięte."),
-                 () => goToDialogPath("/biblioteka"), // Wracamy do biblioteki
-            ]),
              // Akcje jeśli MA klucz (wykonają się, jeśli checkInventory nie przerwie)
             () => message("Okej, idę do sali 307."),
             () => goToDialogPath("/307"), // Zmiana lokacji na salę 307
@@ -283,10 +231,6 @@ const dialogs = [
         isInput: false,
         path: "/biblioteka/goto",
         actions: [
-            () => checkInventory("klucz_mosiezny", [
-                () => message("Potrzebuję klucza... Drzwi biblioteki są zamknięte."),
-                () => goToDialogPath("/biblioteka"),
-            ]),
             () => message("Idę do sali 101."),
             () => goToDialogPath("/101"),
         ]
@@ -296,10 +240,6 @@ const dialogs = [
         isInput: false,
         path: "/biblioteka/goto",
         actions: [
-            () => checkInventory("klucz_mosiezny", [
-                () => message("Bez klucza stąd nie wyjdę."),
-                () => goToDialogPath("/biblioteka"),
-            ]),
             () => message("Idę w kierunku sali 214."),
             () => goToDialogPath("/214"),
         ]
