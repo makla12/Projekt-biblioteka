@@ -134,7 +134,6 @@ const dialogs = [
 
 
     // === POD-ŚCIEŻKA Z PUDEŁKIEM ===
-
     // --- Stan: Pudełko znalezione (/biblioteka/pudelko_znalezione) ---
     {
         description: "Przyjrzyj się temu pudełku.",
