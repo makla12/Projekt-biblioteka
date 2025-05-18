@@ -59,12 +59,12 @@ const CursedText = ({ children }) => {
 
         const xOffset = Math.random() * 3 - 1.5;
         const yOffset = Math.random() * 3 - 1.5;
-        const rotation = Math.random() * 2 - 3; // lil rotation
+        const rotation = Math.random() * 5 - 3; // lil rotation
         targetElement.style.transform = `translate(${xOffset}px, ${yOffset}px) rotate(${rotation}deg)`;
-        targetElement.style.opacity = `${0.7 + Math.random() * 0.3}`; // lil opacity
+        // targetElement.style.opacity = `${0.7 + Math.random() * 0.3}`; // lil opacity
 
 
-      }, 250);
+      }, 120);
     }
 
     return () => {
