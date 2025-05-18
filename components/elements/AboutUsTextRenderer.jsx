@@ -22,7 +22,7 @@ const CursedText = ({ children }) => {
   };
 
   // const getRandomChar = () => possibleChars[Math.floor(Math.random() * possibleChars.length)];
-  const getRandomColor = () => `hsl(0, ${80 + Math.random() * 20}%, ${15 + Math.random() * 20}%)`; 
+  const getRandomColor = () => `hsl(0, ${80+ Math.random() * 20}%, ${30+ Math.random() * 20}%)`; 
 
   const applyCursedEffect = (text) => {
     let newText = '';
@@ -75,26 +75,24 @@ const CursedText = ({ children }) => {
           targetElement.style.opacity = '1';
       }
     };
-  }, [children]); // Перезапускаем эффект, если дочерний элемент изменился
+  }, [children]);
 
   return <span ref={spanRef} className="cursed-effect">{cursedText}</span>;
 };
-
-// Компонент AboutUsTextRenderer остается таким же, как в предыдущем блоке кода
 const AboutUsTextRenderer = ({ children }) => {
   const renderChildren = (nodes) => {
     return React.Children.map(nodes, (child) => {
       if (React.isValidElement(child)) {
         if (child.props && child.props.className && child.props.className.includes('cursed')) {
           let childTextContent = '';
-          // Более надежный способ извлечения текста, даже если он разбит на части
+          
           const getTextContent = (elemChildren) => {
             let text = '';
             React.Children.forEach(elemChildren, (c) => {
               if (typeof c === 'string') {
                 text += c;
               } else if (React.isValidElement(c) && c.props.children) {
-                text += getTextContent(c.props.children); // Рекурсия для вложенных элементов
+                text += getTextContent(c.props.children);
               }
             });
             return text;
@@ -102,23 +100,17 @@ const AboutUsTextRenderer = ({ children }) => {
 
           childTextContent = getTextContent(child.props.children);
 
-          // Если текст пуст после попыток извлечения (например, элемент <li className="cursed" />)
-          // можно поставить заглушку или не применять CursedText
           if (!childTextContent && child.type === 'li' && child.props.children && typeof child.props.children[0] === 'string' ) {
-             // Специальный случай для вашего <li>– zbiory</li>, если тире не часть текста
              childTextContent = child.props.children[0].startsWith('– ') ? child.props.children[0].substring(2) : child.props.children[0];
           } else if (!childTextContent && Array.isArray(child.props.children)) {
-            // Попытка для вашего случая <li>– zbiory</li> -> здесь child.props.children будет массив ['– zbiory']
             const firstChild = child.props.children[0];
             if (typeof firstChild === 'string') {
-                childTextContent = firstChild.replace(/^–\s*/, ''); // Удаляем "– " в начале, если есть
+                childTextContent = firstChild.replace(/^–\s*/, '');
             }
           }
 
 
           if (childTextContent) {
-            // Если "cursed" элемент это li, и у него есть текстовый маркер типа "– ",
-            // его нужно отобразить отдельно, а CursedText применить только к самому тексту.
             const matchDash = childTextContent.match(/^(–\s*|•\s*|-\s*)/);
             let prefix = '';
             let coreText = childTextContent;
@@ -129,27 +121,24 @@ const AboutUsTextRenderer = ({ children }) => {
             }
 
 
-            if (coreText) { // Применяем эффект только если есть текст после префикса
+            if (coreText) { 
                  return React.cloneElement(child, {
                     ...child.props,
                     children: <>{prefix}<CursedText>{coreText}</CursedText></>
                 });
-            } else if (prefix) { // Если есть только префикс, но нет текста для CursedText
+            } else if (prefix) { 
                  return React.cloneElement(child, {
                     ...child.props,
-                    children: <>{prefix}</> // Просто отображаем префикс
+                    children: <>{prefix}</>
                 });
             } else {
-                // Если текст пустой, а префикса нет, можно либо вернуть оригинал, либо заглушку
                  return React.cloneElement(child, {
-                    ...child.props, // Возвращаем оригинал, если текст пуст
+                    ...child.props, 
                  });
             }
 
 
           } else {
-            // Если текст извлечь не удалось, просто клонируем элемент без CursedText
-            // Это может произойти, если <p className="cursed"></p> или <p className="cursed"><img src="..." /></p>
             return React.cloneElement(child, { ...child.props });
           }
         }
