@@ -42,21 +42,8 @@ body{
 }
 
 .cursed-effect {
-	display: inline-block; /* Чтобы transform работал корректно */
-	transition: color 0.1s ease-in-out; /* Плавность смены цвета, если захочется */
-	/* Можно добавить и другие базовые стили для "проклятого" текста */
-	/* Например, немного другой шрифт, если это уместно */
-	/* font-family: 'YourCursedFont', 'Times New Roman', Times, serif; */
+	display: inline-block; 
+	transition: color 0.1s ease-in-out; 
+	font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace;
   }
   
-  /* Стили для всего блока AboutUsTextRenderer, если нужны */
-  .about-us-text-renderer {
-	/* Например, отступы */
-	/* margin-bottom: 20px; */
-  }
-  
-  /* Важно: Если у вас есть другие стили для .cursed, они могут конфликтовать.
-	 Убедитесь, что JavaScript-эффекты имеют приоритет или не конфликтуют. */
-  .cursed {
-	  /* Базовые стили для cursed, которые не будут перебиваться JS */
-  }
