@@ -66,7 +66,7 @@ const checkInventory = (item, actions) => {
 }
 
 const solvePuzzle = (answer, message, actions) => {
-    if(message === answer) {
+    if(message.trim() === answer) {
         return [false, executeActions(actions.success)];
     } else {
         return [false, executeActions(actions.fail)];

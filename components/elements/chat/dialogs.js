@@ -78,7 +78,8 @@ const dialogs = [
         ifHas: ["asked_to_look_around_library"],
         priority: 2,
         actions: [
-            () => message("Jestem przy biurku. Jest tu trochę papierów, stary monitor, lampka... Chwila! Coś tu leży przycupnięte za monitorem! Wygląda jak pognieciona kartka."),
+            () => message("Jestem przy biurku. Jest tu trochę papierów, stary monitor, lampka."),
+            () => message("Coś tu leży przycupnięte za monitorem! Wygląda jak pognieciona kartka."),
             () => goToDialogPath("/biblioteka/biurko"),
         ]
     },
@@ -93,16 +94,6 @@ const dialogs = [
             () => message("Rozglądam się uważnie między regałami... Czekaj! Tutaj, na niższej półce za rzędem encyklopedii, stoi małe, drewniane pudełko. Wygląda na stare."),
             () => giveItem("pudelko_znalezione"),
             () => goToDialogPath("/biblioteka"),
-        ]
-    },
-    {
-        description: "Idź do...",
-        isInput: false,
-        path: "/biblioteka",
-        ifHas: ["drzwi_otwarte"],
-        priority: 1,
-        actions: [
-            () => goToDialogPath("/biblioteka/goto"),
         ]
     },
 
@@ -142,7 +133,6 @@ const dialogs = [
             () => goToDialogPath("/biblioteka/pudelko_opis"),
         ]
     },
-
     {
         description: "Co jest wyryte na wieczku?",
         isInput: false,
@@ -206,7 +196,18 @@ const dialogs = [
             }),
         ]
     },
+
     // === POD-ŚCIEŻKA NAWIGACJI (/biblioteka/goto) ===
+    {
+        description: "Idź do...",
+        isInput: false,
+        path: "/biblioteka",
+        ifHas: ["drzwi_otwarte"],
+        priority: 1,
+        actions: [
+            () => goToDialogPath("/biblioteka/goto"),
+        ]
+    },
     {
         description: "Jednak nie ważne.",
         isInput: false,
@@ -224,7 +225,8 @@ const dialogs = [
         priority: 1,
         actions: [
             () => message("Okej, idę do sali 307."),
-            () => goToDialogPath("/307"),
+            () => message("Już jestem! Co dalej?"),
+            () => goToDialogPath("/307")
         ]
     },
     {
@@ -234,6 +236,7 @@ const dialogs = [
         priority: 1,
         actions: [
             () => message("Idę do sali 101."),
+            () => message("Już jestem! Co dalej?"),
             () => goToDialogPath("/101"),
         ]
     },
@@ -244,160 +247,221 @@ const dialogs = [
         priority: 1,
         actions: [
             () => message("Idę w kierunku sali 214."),
-            () => goToDialogPath("/214"),
+            () => message("Już jestem! Co dalej?"),
+            () => goToDialogPath("/sala/214"),
         ]
     },
 
-    //307
+    // === SALA 214 (/sala/214) - WEJŚCIE I PODSTAWOWA EKSPLORACJA ===
     {
-        description:"Idz do",
-        isInput:false,
-        path:"/307",
-        priority: 1,
-        actions:[
-            () => goToDialogPath("/307/goto"),
+        description: "Opisz mi jak wygląda sala.",
+        isInput: false,
+        path: "/sala/214",
+        ifNotHas: ["asked_to_look_around_214"],
+        priority: 2,
+        actions: [
+            () => message("Widzę dużo ławek ustawionych w rzędach, tradycyjnie. Na ścianie wiszą dwa obrazy: jeden wygląda jak jakiś pałac rzymski, a drugi to portret Juliusza Cezara. Jest też biurko nauczycielskie, a w nim jedna szafka jest zamknięta na kłódkę."),
+            () => giveItem("sala214_opisana"),
+            () => goToDialogPath("/sala/214"),
         ]
     },
     {
-        description:"Jednak nie ważne",
-        isInput:false,
-        path:"/307/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok"),
-            () => goToDialogPath("/307"),
+        description: "Przyjrzyj się obrazom na ścianie.",
+        isInput: false,
+        path: "/sala/214",
+        ifHas: ["asked_to_look_around_214"],
+        priority: 2,
+        actions: [
+            () => message("Ten ze schematem jest dość skomplikowany, dużo symboli, których nie rozpoznaję. Podpisany 'Wzmacniacz klasy A'. Drugi to znany portret Skłodowskiej-Curie z podpisem 'Wielka Polka, Wielka Uczona'. Żaden nie wygląda, jakby krył wskazówkę do kłódki."),
+            () => goToDialogPath("/sala/214"),
         ]
     },
     {
-        description:"biblioteka",
-        isInput:false,
-        path:"/307/goto",
+        description: "Sprawdź biurko nauczycielskie.",
+        isInput: false,
+        path: "/sala/214",
+        ifHas: ["asked_to_look_around_214"],
+        priority: 2,
+        actions: [
+            () => message("Na blacie leży kilka starych dzienników i parę długopisów. Szuflady są pootwierane i puste. Nic ciekawego, poza tą jedną zamkniętą szafką."),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+    {
+        description: "Poszukaj czegoś nietypowego na ławkach.",
+        isInput: false,
+        path: "/sala/214",
+        priority: 2,
+        ifNotHas: ["sala214_szyfr_znaleziony"],
+        actions: [
+            () => message("Chwila... Tak! Na jednej z ławek w ostatnim rzędzie leży kartka. Jest na niej wydrukowana jakaś tabela i odręcznie napisany ciąg liter: MDND MHWX GDXD SRZWXDQLD WCNROB?. To na pewno jakiś szyfr!"),
+            () => giveItem("sala214_szyfr_znaleziony"),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+
+    // === SALA 214 (/sala/214) - INTERAKCJA Z SZYFREM (po jego znalezieniu) ===
+    {
+        description: "Przeczytaj mi ten szyfr z kartki jeszcze raz.",
+        isInput: false,
+        path: "/sala/214",
         priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
+        ifHas: ["sala214_szyfr_znaleziony"],
+        ifNotHas: ["sala214_pytanie_rozszyfrowane"],
+        actions: [
+            () => message("Jasne. Zaszyfrowana wiadomość to: MDND MHWX GDXD SRZWXDQLD WCNROB?. Obok jest ta tabela. Może klucz do tego typu szyfru był w tej książce o kryptografii, którą widziałem/am w bibliotece?"),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+    {
+        description: "Myślę, że rozszyfrowałem/am wiadomość. Chcę ją podać.",
+        isInput: false,
+        path: "/sala/214",
+        priority: 1,
+        ifHas: ["sala214_szyfr_znaleziony"],
+        ifNotHas: ["sala214_pytanie_rozszyfrowane"],
+        actions: [
+            () => message("Świetnie! Jestem bardzo ciekawy/ciekawa. Jak brzmi rozszyfrowana wiadomość?"),
+            () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
+        ]
+    },
+
+    // === SALA 214 (/sala/214/podaj_rozszyfrowana_wiadomosc) - GRACZ WPISUJE ROZSZYFROWANE PYTANIE ===
+    {
+        description: "Wpisz rozszyfrowaną wiadomość:",
+        isInput: true,
+        path: "/sala/214/podaj_rozszyfrowana_wiadomosc",
+        priority: 1,
+        actions: [
+            ({messageInput}) => solvePuzzle("JAKA JEST DATA POWSTANIA SZKOLY", messageInput.toUpperCase().replace("?", ""), {
+                success: [
+                    () => message("Niesamowite! 'JAKA JEST DATA POWSTANIA SZKOŁY?' To musi być to! Teraz tylko trzeba znaleźć tę datę..."),
+                    () => giveItem("sala214_pytanie_rozszyfrowane"),
+                    () => goToDialogPath("/sala/214"),
+                ],
+                fail: [
+                    () => message(`Hmm, "${messageInput}"... Coś mi tu nie pasuje. Sprawdź jeszcze raz szyfr, tabelę i ewentualne wskazówki z książki o kryptografii. Może drobny błąd?`),
+                    () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
+                ],
+            }),
+        ]
+    },
+    {
+        description: "Wróć (zostaw szyfr na razie).",
+        isInput: false,
+        path: "/sala/214/podaj_rozszyfrowana_wiadomosc",
+        priority: 1,
+        actions: [
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+
+    // === SALA 214 (/sala/214) - PO ROZSZYFROWANIU PYTANIA ===
+    {
+        description: "Znam odpowiedź na pytanie o datę powstania szkoły.",
+        isInput: false,
+        path: "/sala/214",
+        priority: 1,
+        ifHas: ["sala214_pytanie_rozszyfrowane"],
+        ifNotHas: ["sala214_szafka_otwarta"],
+        actions: [
+            () => message("Naprawdę? Super! Jaka to data? Mam nadzieję, że to będzie kod do kłódki."),
+            () => goToDialogPath("/sala/214/podaj_date_szkoly"),
+        ]
+    },
+    {
+        description: "Gdzie mogliśmy widzieć datę powstania szkoły? (Przypomnij)",
+        isInput: false,
+        path: "/sala/214",
+        priority: 1,
+        ifHas: ["sala214_pytanie_rozszyfrowane"],
+        ifNotHas: ["sala214_szafka_otwarta"],
+        actions: [
+            () => message("Data powstania szkoły... Coś mi świta... Wydaje mi się, że w bibliotece, na tej dużej tablicy pamiątkowej przy wejściu, był wielki napis 'ELEKTRYK' i jakaś data... Tak, chyba 'ELEKTRYK - 1965'! To musi być to!"),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+
+    // === SALA 214 (/sala/214/podaj_date_szkoly) - GRACZ WPISUJE DATĘ (KOD DO KŁÓDKI) ===
+    {
+        description: "Wpisz datę (rok):",
+        isInput: true,
+        path: "/sala/214/podaj_date_szkoly",
+        priority: 1,
+        actions: [
+            ({messageInput}) => solvePuzzle("1965", messageInput, {
+                success: [
+                    () => message(`Wpisuję ${messageInput}... Słychać szczęk metalu... Kłódka otwarta! Udało się!`),
+                    () => message("W środku szafki jest... tak! Kolejny kawałek jakiejś karty! Jest na nim fragment jakiegoś symbolu lub mapy."),
+                    () => giveItem("kawalek_karty_214"),
+                    () => giveItem("sala214_szafka_otwarta"),
+                    () => goToDialogPath("/sala/214"),
+                ],
+                fail: [
+                    () => message(`"${messageInput}"... Niestety, kłódka ani drgnie. To chyba nie ta data. Jesteś pewien/pewna, że to rok powstania szkoły? Może warto jeszcze raz sprawdzić w bibliotece ten napis 'ELEKTRYK - 1965'?`),
+                    () => goToDialogPath("/sala/214/podaj_date_szkoly"),
+                ],
+            }),
+        ]
+    },
+    {
+        description: "Wróć (zostaw kłódkę na razie).",
+        isInput: false,
+        path: "/sala/214/podaj_date_szkoly",
+        priority: 1,
+        actions: [
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+
+    // === SALA 214 (/sala/214/goto) - NAWIGACJA ===
+    {
+        description: "Idz do...",
+        isInput: false,
+        path: "/sala/214",
+        priority: 1,
+        actions: [
+            () => goToDialogPath("/sala/214/goto"),
+        ]
+    },
+    {
+        description: "Jednak nie ważne.",
+        isInput: false,
+        path: "/sala/214/goto",
+        priority: 1,
+        actions: [
+            () => message("Ok, zostaję tutaj."),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+    {
+        description: "biblioteki",
+        isInput: false,
+        path: "/sala/214/goto",
+        priority: 1,
+        actions: [
+            () => message("Okej idę do biblioteki."),
             () => goToDialogPath("/biblioteka"),
         ]
     },
     {
-        description:"101",
-        isInput:false,
-        path:"/307/goto",
+        description: "sali 101",
+        isInput: false,
+        path: "/sala/214/goto",
         priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
+        actions: [
+            () => message("Dobrze, idziemy do sali 101."),
             () => goToDialogPath("/101"),
         ]
     },
     {
-        description:"214",
-        isInput:false,
-        path:"/307/goto",
+        description: "sali 307",
+        isInput: false,
+        path: "/sala/214/goto",
         priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
-            () => goToDialogPath("/214"),
-        ]
-    },
-
-    //101
-    {
-        description:"Idz do",
-        isInput:false,
-        path:"/101",
-        priority: 1,
-        actions:[
-            () => goToDialogPath("/101/goto"),
-        ]
-    },
-    {
-        description:"Jednak nie ważne",
-        isInput:false,
-        path:"/101/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok"),
-            () => goToDialogPath("/101"),
-        ]
-    },
-    {
-        description:"biblioteka",
-        isInput:false,
-        path:"/101/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
-            () => goToDialogPath("/biblioteka"),
-        ]
-    },
-    {
-        description:"307",
-        isInput:false,
-        path:"/101/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
+        actions: [
+            () => message("W porządku, kierunek sala 307."),
             () => goToDialogPath("/307"),
-        ]
-    },
-    {
-        description:"214",
-        isInput:false,
-        path:"/101/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
-            () => goToDialogPath("/214"),
-        ]
-    },
-
-    //214
-    {
-        description:"Idz do",
-        isInput:false,
-        path:"/214",
-        priority: 1,
-        actions:[
-            () => goToDialogPath("/214/goto"),
-        ]
-    },
-    {
-        description:"Jednak nie ważne",
-        isInput:false,
-        path:"/214/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok"),
-            () => goToDialogPath("/214"),
-        ]
-    },
-    {
-        description:"biblioteka",
-        isInput:false,
-        path:"/214/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
-            () => goToDialogPath("/biblioteka"),
-        ]
-    },
-    {
-        description:"307",
-        isInput:false,
-        path:"/214/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
-            () => goToDialogPath("/307"),
-        ]
-    },
-    {
-        description:"101",
-        isInput:false,
-        path:"/214/goto",
-        priority: 1,
-        actions:[
-            () => message("Ok już jestem"),
-            () => goToDialogPath("/101"),
         ]
     },
 ]
