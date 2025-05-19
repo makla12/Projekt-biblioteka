@@ -272,7 +272,7 @@ const dialogs = [
         ifHas: ["asked_to_look_around_214"],
         priority: 2,
         actions: [
-            () => message("Ten ze schematem jest dość skomplikowany, dużo symboli, których nie rozpoznaję. Podpisany 'Wzmacniacz klasy A'. Drugi to znany portret Skłodowskiej-Curie z podpisem 'Wielka Polka, Wielka Uczona'. Żaden nie wygląda, jakby krył wskazówkę do kłódki."),
+            () => message("TYMCZASOWA WIADOMOŚĆ DO ZMIANY!!!!!!!"),
             () => goToDialogPath("/sala/214"),
         ]
     },
@@ -308,7 +308,7 @@ const dialogs = [
         path: "/sala/214",
         ifHas: ["sala214_szyfr_znaleziony"],
         ifNotHas: ["sala214_pytanie_rozszyfrowane"],
-        priority: 1,
+        priority: 3,
         actions: [
             () => message("Jasne. Zaszyfrowana wiadomość to: MDND MHWX GDXD SRZWXDQLD WCNROB?. Obok jest ta tabela. Może klucz do tego typu szyfru był w tej książce o kryptografii, którą widziałem/am w bibliotece?"),
             () => goToDialogPath("/sala/214"),
@@ -320,7 +320,7 @@ const dialogs = [
         path: "/sala/214",
         ifHas: ["sala214_szyfr_znaleziony"],
         ifNotHas: ["sala214_pytanie_rozszyfrowane"],
-        priority: 1,
+        priority: 3,
         actions: [
             () => message("Świetnie! Jestem bardzo ciekawy/ciekawa. Jak brzmi rozszyfrowana wiadomość?"),
             () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
@@ -342,18 +342,9 @@ const dialogs = [
                 ],
                 fail: [
                     () => message(`Hmm, "${messageInput}"... Coś mi tu nie pasuje. Sprawdź jeszcze raz szyfr, tabelę i ewentualne wskazówki z książki o kryptografii. Może drobny błąd?`),
-                    () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
+                    () => goToDialogPath("/sala/214"),
                 ],
             }),
-        ]
-    },
-    {
-        description: "Wróć (zostaw szyfr na razie).",
-        isInput: false,
-        path: "/sala/214/podaj_rozszyfrowana_wiadomosc",
-        priority: 1,
-        actions: [
-            () => goToDialogPath("/sala/214"),
         ]
     },
 
