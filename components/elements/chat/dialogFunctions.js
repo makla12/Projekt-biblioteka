@@ -1,4 +1,5 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
+const byteSize = str => new Blob([str]).size;
 
 function setCookie(cname, cvalue, exdays) {
     const d = new Date();
@@ -23,7 +24,13 @@ function getCookie(cname) {
 }
 
 const updateChatHistory = (obj) => {
-    setCookie("chatHistory", JSON.stringify({hist:[...JSON.parse(getCookie("chatHistory")).hist, obj]}));
+    let cookieObj = {hist: [...JSON.parse(getCookie("chatHistory")).hist, obj]};
+
+    while(byteSize(JSON.stringify(cookieObj)) > 4000) {
+        cookieObj.hist.splice(0, 1);
+    }
+
+    setCookie("chatHistory", JSON.stringify(cookieObj));
 }
 
 const updateInventory = (obj) => {

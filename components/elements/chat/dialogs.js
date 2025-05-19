@@ -261,7 +261,7 @@ const dialogs = [
         priority: 2,
         actions: [
             () => message("Widzę dużo ławek ustawionych w rzędach, tradycyjnie. Na ścianie wiszą dwa obrazy: jeden wygląda jak jakiś pałac rzymski, a drugi to portret Juliusza Cezara. Jest też biurko nauczycielskie, a w nim jedna szafka jest zamknięta na kłódkę."),
-            () => giveItem("sala214_opisana"),
+            () => giveItem("asked_to_look_around_214"),
             () => goToDialogPath("/sala/214"),
         ]
     },
@@ -315,7 +315,7 @@ const dialogs = [
         ]
     },
     {
-        description: "Myślę, że rozszyfrowałem/am wiadomość. Chcę ją podać.",
+        description: "Myślę, że rozszyfrowałem/am wiadomość.",
         isInput: false,
         path: "/sala/214",
         ifHas: ["sala214_szyfr_znaleziony"],
