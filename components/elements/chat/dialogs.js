@@ -65,7 +65,7 @@ const dialogs = [
                 () => message("Już próbowałam chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),
                 () => goToDialogPath("/biblioteka"),
             ]),
-            () => message("Chwila, mam ten mosiężny klucz! Spróbuję go użyć..."),
+            () => message("Mam ten klucz! Spróbuję go użyć..."),
             () => message("Pasuje! Przekręcam... Drzwi otwarte! Możemy iść dalej!"),
             () => giveItem("drzwi_otwarte"),
             () => goToDialogPath("/biblioteka"),
@@ -147,7 +147,7 @@ const dialogs = [
         description: "Co jest wyryte na wieczku?",
         isInput: false,
         path: "/biblioteka/pudelko_opis",
-        priority: 1,
+        priority: 2,
         actions: [
             () => message("Napis głosi: 'Sekret tkwi w głosach czytelników, tam gdzie lustro prawdę Ci powie. Szukaj opinii o ostatnich eksperymentach Frankensteina.' Hmm, brzmi jak zagadka."),
             () => goToDialogPath("/biblioteka/pudelko_opis"),
@@ -157,7 +157,7 @@ const dialogs = [
         description: "Ok chyba znam kod",
         isInput: false,
         path: "/biblioteka/pudelko_opis",
-        priority: 1,
+        priority: 3,
         actions: [
             () => message("Okej, słucham uważnie. Jaki kod mam wpisać?"),
             () => goToDialogPath("/biblioteka/wpisz_kod"),
@@ -194,13 +194,13 @@ const dialogs = [
             ({messageInput}) => solvePuzzle("1818", messageInput, {
                 success: [
                     () => message(`Wpisuję ${messageInput}... Słychać klik! Zamek puścił! Pudełko otwarte!`),
-                    () => message("A w środku... jest mały, mosiężny klucz! Wygląda na ważny."),
+                    () => message("A w środku... jest mały, klucz! Wygląda na ważny."),
                     () => giveItem("klucz_do_biblioteki"),
                     () => message("Super! Mam klucz! Co teraz?"),
                     () => goToDialogPath("/biblioteka"),
                 ],
                 fail: [
-                    () => message(`Wpisałem/am ${messageInput}... Niestety, nic się nie dzieje. Zamek nadal trzyma. To musi być zły kod. Sprawdź dokładnie wskazówkę i może poszukaj tych 'opinii' w internecie? Pamiętaj o 'lustrze'.`),
+                    () => message(`Wpisałem/am ${messageInput}. Niestety, nic się nie dzieje. Może ten napis na wieczku coś nam podpowie?`),
                     () => goToDialogPath("/biblioteka/pudelko_opis"),
                 ],
             }),
