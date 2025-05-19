@@ -291,8 +291,9 @@ const dialogs = [
         description: "Poszukaj czegoś nietypowego na ławkach.",
         isInput: false,
         path: "/sala/214",
-        priority: 2,
+        ifHas: ["asked_to_look_around_214"],
         ifNotHas: ["sala214_szyfr_znaleziony"],
+        priority: 2,
         actions: [
             () => message("Chwila... Tak! Na jednej z ławek w ostatnim rzędzie leży kartka. Jest na niej wydrukowana jakaś tabela i odręcznie napisany ciąg liter: MDND MHWX GDXD SRZWXDQLD WCNROB?. To na pewno jakiś szyfr!"),
             () => giveItem("sala214_szyfr_znaleziony"),
@@ -305,9 +306,9 @@ const dialogs = [
         description: "Przeczytaj mi ten szyfr z kartki jeszcze raz.",
         isInput: false,
         path: "/sala/214",
-        priority: 1,
         ifHas: ["sala214_szyfr_znaleziony"],
         ifNotHas: ["sala214_pytanie_rozszyfrowane"],
+        priority: 1,
         actions: [
             () => message("Jasne. Zaszyfrowana wiadomość to: MDND MHWX GDXD SRZWXDQLD WCNROB?. Obok jest ta tabela. Może klucz do tego typu szyfru był w tej książce o kryptografii, którą widziałem/am w bibliotece?"),
             () => goToDialogPath("/sala/214"),
@@ -317,9 +318,9 @@ const dialogs = [
         description: "Myślę, że rozszyfrowałem/am wiadomość. Chcę ją podać.",
         isInput: false,
         path: "/sala/214",
-        priority: 1,
         ifHas: ["sala214_szyfr_znaleziony"],
         ifNotHas: ["sala214_pytanie_rozszyfrowane"],
+        priority: 1,
         actions: [
             () => message("Świetnie! Jestem bardzo ciekawy/ciekawa. Jak brzmi rozszyfrowana wiadomość?"),
             () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
@@ -361,9 +362,9 @@ const dialogs = [
         description: "Znam odpowiedź na pytanie o datę powstania szkoły.",
         isInput: false,
         path: "/sala/214",
-        priority: 1,
         ifHas: ["sala214_pytanie_rozszyfrowane"],
         ifNotHas: ["sala214_szafka_otwarta"],
+        priority: 1,
         actions: [
             () => message("Naprawdę? Super! Jaka to data? Mam nadzieję, że to będzie kod do kłódki."),
             () => goToDialogPath("/sala/214/podaj_date_szkoly"),
