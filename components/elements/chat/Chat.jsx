@@ -1,5 +1,5 @@
-import { dialogs, firstMessages } from "./dialogs";
-import { executeActions } from "./dialogFunctions";
+import { dialogs, firstMessages } from "./dialogs/dialogs";
+import { executeActions } from "./dialogs/dialogFunctions";
 import ChatInput from "./ChatInput";
 import { useEffect, useState } from "react";
 import ChatBooba from "./ChatBooba";
