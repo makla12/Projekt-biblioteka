@@ -2,7 +2,7 @@ import { message, goToDialogPath, giveItem, checkInventory, solvePuzzle } from "
 
 const firstMessages = [
     { message: "Halo...? Jest tu kto? Słyszycie mnie?", self: false },
-    { message: "Jestem [imię postaci, np. Ania], utknęłam w szkolnej bibliotece! Wszystko pozamykane, a ja nie mogę otworzyć drzwi!", self: false },
+    { message: "Jestem Amper, utknęłem w szkolnej bibliotece! Wszystko pozamykane, a ja nie mogę otworzyć drzwi!", self: false },
     { message: "Na dworze już ciemno... Pomożesz mi się stąd wydostać?", self: false },
 ];
 
@@ -19,13 +19,13 @@ const dialogs = [
         ]
     },
     {
-        description: "Jak to utknęłaś? Co się stało?", // Gracz dopytuje o szczegóły
+        description: "Jak to utknąłem? Co się stało?", // Gracz dopytuje o szczegóły
         isInput: false,
         path: "/startDialog",
         ifNotHas: ["asked_how_trapped"],
         priority: 1,
         actions: [
-            () => message("Sama nie do końca rozumiem... Zaczytałam się w jednym z tych starych foteli w kącie. Kiedy się ocknęłam, było już dawno po dzwonku, a drzwi były zamknięte na jakiś dziwny, stary zamek, którego nigdy wcześniej nie widziałam. Proszę, pomóż mi!"),
+            () => message("Sam nie do końca rozumiem... Zaczytałem się w jednym z tych starych foteli w kącie. Kiedy się ocknęłem, było już dawno po dzwonku, a drzwi były zamknięte na jakiś dziwny, stary zamek, którego nigdy wcześniej nie widziałam. Proszę, pomóż mi!"),
             () => giveItem("asked_how_trapped"),
             () => goToDialogPath("/startDialog"),
         ]
@@ -36,7 +36,7 @@ const dialogs = [
         path: "/startDialog",
         priority: 1,
         actions: [
-            () => message("Co? Ale... proszę! Nie zostawiaj mnie tu samej! Obiecuję, że to nie potrwa długo! Na pewno razem coś wymyślimy! Zgadzasz się?"),
+            () => message("Co? Ale... proszę! Nie zostawiaj mnie tu! Obiecuję, że to nie potrwa długo! Na pewno razem coś wymyślimy! Zgadzasz się?"),
             () => goToDialogPath("/startDialog"),
         ]
     },
@@ -62,12 +62,12 @@ const dialogs = [
         priority: 1,
         actions: [
             () => checkInventory("klucz_do_biblioteki", [
-                () => message("Już próbowałam chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),
+                () => message("Mam ten klucz! Spróbuję go użyć..."),
+                () => message("Pasuje! Przekręcam... Drzwi otwarte! Możemy iść dalej!"),
+                () => giveItem("drzwi_otwarte"),
                 () => goToDialogPath("/biblioteka"),
             ]),
-            () => message("Mam ten klucz! Spróbuję go użyć..."),
-            () => message("Pasuje! Przekręcam... Drzwi otwarte! Możemy iść dalej!"),
-            () => giveItem("drzwi_otwarte"),
+            () => message("Już próbowałem chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),
             () => goToDialogPath("/biblioteka"),
         ]
     },
@@ -260,8 +260,8 @@ const dialogs = [
         ifNotHas: ["asked_to_look_around_214"],
         priority: 2,
         actions: [
-            () => message("Widzę dużo ławek ustawionych w rzędach, tradycyjnie. Na ścianie wiszą dwa obrazy: jeden wygląda jak jakiś pałac rzymski, a drugi to portret Juliusza Cezara. Jest też biurko nauczycielskie, a w nim jedna szafka jest zamknięta na kłódkę."),
-            () => giveItem("sala214_opisana"),
+            () => message("Widzę dużo ławek ustawionych w rzędach, tradycyjnie. Na ścianie wiszą dwa obrazy. Jest też biurko nauczycielskie, a w nim jedna szafka jest zamknięta na kłódkę."),
+            () => giveItem("asked_to_look_around_214"),
             () => goToDialogPath("/sala/214"),
         ]
     },
@@ -272,19 +272,23 @@ const dialogs = [
         ifHas: ["asked_to_look_around_214"],
         priority: 2,
         actions: [
-            () => message("Ten ze schematem jest dość skomplikowany, dużo symboli, których nie rozpoznaję. Podpisany 'Wzmacniacz klasy A'. Drugi to znany portret Skłodowskiej-Curie z podpisem 'Wielka Polka, Wielka Uczona'. Żaden nie wygląda, jakby krył wskazówkę do kłódki."),
+            () => message("Pierwszy obraz to zwykły pałac nic specjalnego. Drugi obraz to portret Juliusza Cezara. Standardowy portret, ale w rogu jest wyryty numer 'III' może to coś ważnego"),
+            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+                () => message("Raczej to już się nam nie przyda."),
+                () => goToDialogPath("/sala/214"),
+            ]),
             () => goToDialogPath("/sala/214"),
         ]
     },
     {
-        description: "Sprawdź biurko nauczycielskie.",
+        description: "Podejdz do biurka nauczycielskiego.",
         isInput: false,
         path: "/sala/214",
         ifHas: ["asked_to_look_around_214"],
-        priority: 2,
+        priority: 3,
         actions: [
-            () => message("Na blacie leży kilka starych dzienników i parę długopisów. Szuflady są pootwierane i puste. Nic ciekawego, poza tą jedną zamkniętą szafką."),
-            () => goToDialogPath("/sala/214"),
+            () => message("Jestem przy biurku. Na blacie leży trochę kartek. Szuflady są w większości puste ale jest też ta jedna zamknięta na kłódkę."),
+            () => goToDialogPath("/sala/214/biurko"),
         ]
     },
     {
@@ -295,35 +299,89 @@ const dialogs = [
         ifNotHas: ["sala214_szyfr_znaleziony"],
         priority: 2,
         actions: [
-            () => message("Chwila... Tak! Na jednej z ławek w ostatnim rzędzie leży kartka. Jest na niej wydrukowana jakaś tabela i odręcznie napisany ciąg liter: MDND MHWX GDXD SRZWXDQLD WCNROB?. To na pewno jakiś szyfr!"),
+            () => message("Chwila... Tak! Na jednej z ławek w ostatnim rzędzie leży kartka. Jest na niej wydrukowany napis: MDND MHVW GDWD SRZVWDQLD VCNROB?. Wygląda jak bazgroły, ale może to jakaś zaszyfrowana wiadomość?"),
             () => giveItem("sala214_szyfr_znaleziony"),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+
+    // === SALA 214 (/sala/214) - INTERAKCJA PRZY BIURKU ===
+    {
+        description: "Przyjrzyj się tym kartkom",
+        isInput: false,
+        path: "/sala/214/biurko",
+        ifNotHas: ["sala214_latin_sheet_read"],
+        priority: 1,
+        actions: [
+            () => message("Jest na niej napisane: veni vidi vici. To chyba coś po łacinie, ale nie wiem co to znaczy. Może to jakaś podpowiedź do zagadki?"),
+            () => giveItem("sala214_latin_sheet_read"),
+            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+                () => message("Wydaje mi się, że to już nie będzie nam potrzebne."),
+                () => goToDialogPath("/sala/214/biurko"),
+            ]),
+            () => goToDialogPath("/sala/214/biurko"),
+        ]
+    },
+    {
+        description: "Co było na tej kartce?",
+        isInput: false,
+        path: "/sala/214/biurko",
+        ifHas: ["sala214_latin_sheet_read"],
+        priority: 2,
+        actions: [
+            () => message("Na kartce jest napisane: veni vidi vici. Brzmi jak jakaś podpowiedź."),
+            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+                () => message("Wydaje mi się, że to już nie będzie nam potrzebne."),
+                () => goToDialogPath("/sala/214/biurko"),
+            ]),
+            () => goToDialogPath("/sala/214/biurko"),
+        ]
+    },
+    {
+        description: "Przyjrzyj się zamkniętej szafce",
+        isInput: false,
+        path: "/sala/214/biurko",
+        priority: 1,
+        ifNotHas: ["sala214_pytanie_rozszyfrowane"],
+        actions: [
+            () => message("To szafka z kłódką. Wygląda na solidną, nie ma szans, żeby otworzyć ją bez klucza lub kodu."),
+            () => goToDialogPath("/sala/214/biurko"),
+        ]
+    },
+    {
+        description: "Odejdź od biurka.",
+        isInput: false,
+        path: "/sala/214/biurko",
+        priority: 1,
+        actions: [
+            () => message("Dobra, odchodzę od biurka."),
             () => goToDialogPath("/sala/214"),
         ]
     },
 
     // === SALA 214 (/sala/214) - INTERAKCJA Z SZYFREM (po jego znalezieniu) ===
     {
-        description: "Przeczytaj mi ten szyfr z kartki jeszcze raz.",
+        description: "Chyba rozszyfrowałem tą wiadomość.",
         isInput: false,
         path: "/sala/214",
         ifHas: ["sala214_szyfr_znaleziony"],
         ifNotHas: ["sala214_pytanie_rozszyfrowane"],
-        priority: 1,
+        priority: 3,
         actions: [
-            () => message("Jasne. Zaszyfrowana wiadomość to: MDND MHWX GDXD SRZWXDQLD WCNROB?. Obok jest ta tabela. Może klucz do tego typu szyfru był w tej książce o kryptografii, którą widziałem/am w bibliotece?"),
-            () => goToDialogPath("/sala/214"),
+            () => message("Świetnie! Jestem bardzo ciekawy. Jak brzmi rozszyfrowana wiadomość?"),
+            () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
         ]
     },
     {
-        description: "Myślę, że rozszyfrowałem/am wiadomość. Chcę ją podać.",
+        description: "Przeczytaj mi ten napis z kartki jeszcze raz.",
         isInput: false,
         path: "/sala/214",
         ifHas: ["sala214_szyfr_znaleziony"],
         ifNotHas: ["sala214_pytanie_rozszyfrowane"],
-        priority: 1,
+        priority: 3,
         actions: [
-            () => message("Świetnie! Jestem bardzo ciekawy/ciekawa. Jak brzmi rozszyfrowana wiadomość?"),
-            () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
+            () => message("Jasne. Napis to: MDND MHVW GDWD SRZVWDQLD VCNROB?. Może w bibliotece jest jakaś książka która może nam pomóc?"),
+            () => goToDialogPath("/sala/214"),
         ]
     },
 
@@ -336,58 +394,57 @@ const dialogs = [
         actions: [
             ({messageInput}) => solvePuzzle("JAKA JEST DATA POWSTANIA SZKOLY", messageInput.toUpperCase().replace("?", ""), {
                 success: [
-                    () => message("Niesamowite! 'JAKA JEST DATA POWSTANIA SZKOŁY?' To musi być to! Teraz tylko trzeba znaleźć tę datę..."),
+                    () => message("Niesamowite! 'JAKA JEST DATA POWSTANIA SZKOŁY?' To musi być kodem do tej szawki! Teraz tylko trzeba znaleźć tę datę..."),
                     () => giveItem("sala214_pytanie_rozszyfrowane"),
+                    () => checkInventory("sheet_elektryk_1965_sheet_read", [
+                        () => message("Hmm, wydaje mi się, że coś odnośnie tego widziałem w bibliotece."),
+                        () => goToDialogPath("/sala/214"),
+                    ]),
                     () => goToDialogPath("/sala/214"),
                 ],
                 fail: [
                     () => message(`Hmm, "${messageInput}"... Coś mi tu nie pasuje. Sprawdź jeszcze raz szyfr, tabelę i ewentualne wskazówki z książki o kryptografii. Może drobny błąd?`),
-                    () => goToDialogPath("/sala/214/podaj_rozszyfrowana_wiadomosc"),
+                    () => goToDialogPath("/sala/214"),
                 ],
             }),
-        ]
-    },
-    {
-        description: "Wróć (zostaw szyfr na razie).",
-        isInput: false,
-        path: "/sala/214/podaj_rozszyfrowana_wiadomosc",
-        priority: 1,
-        actions: [
-            () => goToDialogPath("/sala/214"),
         ]
     },
 
     // === SALA 214 (/sala/214) - PO ROZSZYFROWANIU PYTANIA ===
     {
-        description: "Znam odpowiedź na pytanie o datę powstania szkoły.",
+        description: "Wpisz kod do szafki",
         isInput: false,
-        path: "/sala/214",
+        path: "/sala/214/biurko",
+        priority: 3,
         ifHas: ["sala214_pytanie_rozszyfrowane"],
         ifNotHas: ["sala214_szafka_otwarta"],
-        priority: 1,
         actions: [
-            () => message("Naprawdę? Super! Jaka to data? Mam nadzieję, że to będzie kod do kłódki."),
-            () => goToDialogPath("/sala/214/podaj_date_szkoly"),
+            () => message("Okej, jaki kod mam wpisać?"),
+            () => goToDialogPath("/sala/214/kod_szafki"),
         ]
     },
     {
-        description: "Gdzie mogliśmy widzieć datę powstania szkoły? (Przypomnij)",
+        description: "Gdzie może być ta data?",
         isInput: false,
         path: "/sala/214",
-        priority: 1,
+        priority: 3,
         ifHas: ["sala214_pytanie_rozszyfrowane"],
         ifNotHas: ["sala214_szafka_otwarta"],
         actions: [
-            () => message("Data powstania szkoły... Coś mi świta... Wydaje mi się, że w bibliotece, na tej dużej tablicy pamiątkowej przy wejściu, był wielki napis 'ELEKTRYK' i jakaś data... Tak, chyba 'ELEKTRYK - 1965'! To musi być to!"),
+            () => checkInventory("elektryk_1965_sheet_read", [
+                () => message("Wydaje mi się, że coś odnośnie tego widziałem w bibliotece."),
+                () => goToDialogPath("/sala/214"),
+            ]),
+            () => message("Nie wiem, może poszukamy czegoś w innych salach?"),
             () => goToDialogPath("/sala/214"),
         ]
     },
 
     // === SALA 214 (/sala/214/podaj_date_szkoly) - GRACZ WPISUJE DATĘ (KOD DO KŁÓDKI) ===
     {
-        description: "Wpisz datę (rok):",
+        description: "Wpisz kod:",
         isInput: true,
-        path: "/sala/214/podaj_date_szkoly",
+        path: "/sala/214/kod_szafki",
         priority: 1,
         actions: [
             ({messageInput}) => solvePuzzle("1965", messageInput, {
@@ -399,19 +456,10 @@ const dialogs = [
                     () => goToDialogPath("/sala/214"),
                 ],
                 fail: [
-                    () => message(`"${messageInput}"... Niestety, kłódka ani drgnie. To chyba nie ta data. Jesteś pewien/pewna, że to rok powstania szkoły? Może warto jeszcze raz sprawdzić w bibliotece ten napis 'ELEKTRYK - 1965'?`),
-                    () => goToDialogPath("/sala/214/podaj_date_szkoly"),
+                    () => message(`"${messageInput}"... Niestety, kłódka ani drgnie. To chyba nie ta data. Masz pewność że to dobra data?`),
+                    () => goToDialogPath("/sala/214"),
                 ],
             }),
-        ]
-    },
-    {
-        description: "Wróć (zostaw kłódkę na razie).",
-        isInput: false,
-        path: "/sala/214/podaj_date_szkoly",
-        priority: 1,
-        actions: [
-            () => goToDialogPath("/sala/214"),
         ]
     },
 
@@ -446,7 +494,7 @@ const dialogs = [
         ]
     },
     {
-        description: "sali 101",
+        description: "101",
         isInput: false,
         path: "/sala/214/goto",
         priority: 1,
@@ -456,7 +504,7 @@ const dialogs = [
         ]
     },
     {
-        description: "sali 307",
+        description: "307",
         isInput: false,
         path: "/sala/214/goto",
         priority: 1,
