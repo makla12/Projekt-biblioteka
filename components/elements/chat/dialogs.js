@@ -284,9 +284,8 @@ const dialogs = [
         description: "Podejdz do biurka nauczycielskiego.",
         isInput: false,
         path: "/sala/214",
-        ifNotHas: ["sala214_biurko_przeszukane"],
         ifHas: ["asked_to_look_around_214"],
-        priority: 2,
+        priority: 3,
         actions: [
             () => message("Jestem przy biurku. Na blacie leży trochę kartek. Szuflady są w większości puste ale jest też ta jedna zamknięta na kłódkę."),
             () => goToDialogPath("/sala/214/biurko"),
@@ -308,12 +307,54 @@ const dialogs = [
 
     // === SALA 214 (/sala/214) - INTERAKCJA PRZY BIURKU ===
     {
-        description: "",
+        description: "Przyjrzyj się tym kartkom",
+        isInput: false,
+        path: "/sala/214/biurko",
+        ifNotHas: ["sala214_latin_sheet_read"],
+        priority: 1,
+        actions: [
+            () => message("Jest na niej napisane: veni vidi vici. To chyba coś po łacinie, ale nie wiem co to znaczy. Może to jakaś podpowiedź do zagadki?"),
+            () => giveItem("sala214_latin_sheet_read"),
+            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+                () => message("Wydaje mi się, że to już nie będzie nam potrzebne."),
+                () => goToDialogPath("/sala/214/biurko"),
+            ]),
+            () => goToDialogPath("/sala/214/biurko"),
+        ]
+    },
+    {
+        description: "Co było na tej kartce?",
+        isInput: false,
+        path: "/sala/214/biurko",
+        ifHas: ["sala214_latin_sheet_read"],
+        priority: 2,
+        actions: [
+            () => message("Na kartce jest napisane: veni vidi vici. Brzmi jak jakaś podpowiedź."),
+            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+                () => message("Wydaje mi się, że to już nie będzie nam potrzebne."),
+                () => goToDialogPath("/sala/214/biurko"),
+            ]),
+            () => goToDialogPath("/sala/214/biurko"),
+        ]
+    },
+    {
+        description: "Przyjrzyj się zamkniętej szafce",
+        isInput: false,
+        path: "/sala/214/biurko",
+        priority: 1,
+        ifNotHas: ["sala214_pytanie_rozszyfrowane"],
+        actions: [
+            () => message("To szafka z kłódką. Wygląda na solidną, nie ma szans, żeby otworzyć ją bez klucza lub kodu."),
+            () => goToDialogPath("/sala/214/biurko"),
+        ]
+    },
+    {
+        description: "Odejdź od biurka.",
         isInput: false,
         path: "/sala/214/biurko",
         priority: 1,
         actions: [
-            () => message(""),
+            () => message("Dobra, odchodzę od biurka."),
             () => goToDialogPath("/sala/214"),
         ]
     },
@@ -371,15 +412,15 @@ const dialogs = [
 
     // === SALA 214 (/sala/214) - PO ROZSZYFROWANIU PYTANIA ===
     {
-        description: "Chyba znam tą datę.",
+        description: "Wpisz kod do szafki",
         isInput: false,
-        path: "/sala/214",
+        path: "/sala/214/biurko",
+        priority: 3,
         ifHas: ["sala214_pytanie_rozszyfrowane"],
         ifNotHas: ["sala214_szafka_otwarta"],
-        priority: 3,
         actions: [
-            () => message("Naprawdę? Super! Jaka to data? Mam nadzieję, że to będzie kod do kłódki."),
-            () => goToDialogPath("/sala/214/podaj_date_szkoly"),
+            () => message("Okej, jaki kod mam wpisać?"),
+            () => goToDialogPath("/sala/214/kod_szafki"),
         ]
     },
     {
@@ -401,9 +442,9 @@ const dialogs = [
 
     // === SALA 214 (/sala/214/podaj_date_szkoly) - GRACZ WPISUJE DATĘ (KOD DO KŁÓDKI) ===
     {
-        description: "Wpisz datę (rok):",
+        description: "Wpisz kod:",
         isInput: true,
-        path: "/sala/214/podaj_date_szkoly",
+        path: "/sala/214/kod_szafki",
         priority: 1,
         actions: [
             ({messageInput}) => solvePuzzle("1965", messageInput, {
