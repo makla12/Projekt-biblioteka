@@ -226,7 +226,7 @@ const dialogs = [
         actions: [
             () => message("Okej, idę do sali 307."),
             () => message("Już jestem! Co dalej?"),
-            () => goToDialogPath("/307")
+            () => goToDialogPath("/sala/307")
         ]
     },
     {
@@ -237,7 +237,7 @@ const dialogs = [
         actions: [
             () => message("Idę do sali 101."),
             () => message("Już jestem! Co dalej?"),
-            () => goToDialogPath("/101"),
+            () => goToDialogPath("/sala/101"),
         ]
     },
     {
@@ -500,7 +500,7 @@ const dialogs = [
         priority: 1,
         actions: [
             () => message("Dobrze, idziemy do sali 101."),
-            () => goToDialogPath("/101"),
+            () => goToDialogPath("/sala/101"),
         ]
     },
     {
@@ -510,7 +510,109 @@ const dialogs = [
         priority: 1,
         actions: [
             () => message("W porządku, kierunek sala 307."),
-            () => goToDialogPath("/307"),
+            () => goToDialogPath("/sala/307"),
+        ]
+    },
+
+    // === SALA 101 (/sala/214/goto) - NAWIGACJA ===
+    {
+        description: "Idz do...",
+        isInput: false,
+        path: "/sala/101",
+        priority: 1,
+        actions: [
+            () => goToDialogPath("/sala/101/goto"),
+        ]
+    },
+    {
+        description: "Jednak nie ważne.",
+        isInput: false,
+        path: "/sala/101/goto",
+        priority: 1,
+        actions: [
+            () => message("Ok, zostaję tutaj."),
+            () => goToDialogPath("/sala/101"),
+        ]
+    },
+    {
+        description: "biblioteki",
+        isInput: false,
+        path: "/sala/101/goto",
+        priority: 1,
+        actions: [
+            () => message("Okej idę do biblioteki."),
+            () => goToDialogPath("/biblioteka"),
+        ]
+    },
+    {
+        description: "214",
+        isInput: false,
+        path: "/sala/101/goto",
+        priority: 1,
+        actions: [
+            () => message("Dobrze, idziemy do sali 214."),
+            () => goToDialogPath("/sala/214"),
+        ]
+    },
+    {
+        description: "307",
+        isInput: false,
+        path: "/sala/101/goto",
+        priority: 1,
+        actions: [
+            () => message("W porządku, kierunek sala 307."),
+            () => goToDialogPath("/sala/307"),
+        ]
+    },
+
+    // === SALA 307 (/sala/214/goto) - NAWIGACJA ===
+    {
+        description: "Idz do...",
+        isInput: false,
+        path: "/sala/307",
+        priority: 1,
+        actions: [
+            () => goToDialogPath("/sala/307/goto"),
+        ]
+    },
+    {
+        description: "Jednak nie ważne.",
+        isInput: false,
+        path: "/sala/307/goto",
+        priority: 1,
+        actions: [
+            () => message("Ok, zostaję tutaj."),
+            () => goToDialogPath("/sala/307"),
+        ]
+    },
+    {
+        description: "biblioteki",
+        isInput: false,
+        path: "/sala/307/goto",
+        priority: 1,
+        actions: [
+            () => message("Okej idę do biblioteki."),
+            () => goToDialogPath("/biblioteka"),
+        ]
+    },
+    {
+        description: "101",
+        isInput: false,
+        path: "/sala/307/goto",
+        priority: 1,
+        actions: [
+            () => message("Dobrze, idziemy do sali 101."),
+            () => goToDialogPath("/sala/101"),
+        ]
+    },
+    {
+        description: "214",
+        isInput: false,
+        path: "/sala/307/goto",
+        priority: 1,
+        actions: [
+            () => message("W porządku, kierunek sala 214."),
+            () => goToDialogPath("/sala/214"),
         ]
     },
 ]
