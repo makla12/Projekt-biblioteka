@@ -1,5 +1,5 @@
-import { dialogs, firstMessages } from "./dialogs";
-import { executeActions } from "./dialogFunctions";
+import { dialogs, firstMessages } from "./dialogs/dialogs";
+import { executeActions } from "./dialogs/dialogFunctions";
 import ChatInput from "./ChatInput";
 import { useEffect, useState } from "react";
 import ChatBooba from "./ChatBooba";
@@ -75,7 +75,7 @@ export default function Chat() {
                         ))}
                 </div>
 
-                <div className="w-full h-auto gap-5 flex items-center overflow-x-auto my-8 pb-2 chatScroll justify-evenly">
+                <div className="w-full h-auto gap-5 flex items-center overflow-x-auto my-8 pb-2 chatScroll">
                     {!dialogPath ? null :
                         dialogs.filter((value) => value.path == dialogPath)
                             .filter(value => arrayIncludesAll(inventory, value.ifHas))
