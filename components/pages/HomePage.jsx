@@ -12,15 +12,12 @@ export default function HomePage() {
         <NavBar curentSiteId={0} />
         
 		<div className="w-full h-96 ">
-                {/* Light mode image */}
-                <div className="block dark:hidden w-[99%] sm:w-3/4 m-auto">
+                <div className="block dark:hidden w-[99%] sm:w-3/4 m-auto"> {/*light mode*/}
                     <Image
                         src={IllustrationLight} alt="Book Power"
                     />
                 </div>
-
-                {/* Dark mode image */}
-                <div className="hidden dark:block w-[99%] sm:w-3/4 m-auto">
+                <div className="hidden dark:block w-[99%] sm:w-3/4 m-auto">  {/*dark mode*/}
                     <Image
                         src={IllustrationDark} alt="Book Power"
                     />
