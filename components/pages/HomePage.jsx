@@ -28,8 +28,8 @@ export default function HomePage() {
                 Biblioteka z Energią!
             </h1>
         </div>
-        <div className="h-[50vh] flex justify-between flex-row  py-6">
-            <div className="bg-[var(--background2)] mx-auto w-[40vw] h-100% rounded-xl p-9 text-[1.5vw]">
+        <div className="h-auto flex justify-between sm:flex-row flex-col py-6">
+            <div className="bg-[var(--background2)] mx-auto sm:w-[40vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[3.5vw] sm:my-0 my-3">
                 <p>
                     <b>Decydujesz, co przeczytać w następnej kolejności?</b><br></br><br></br>
                     Jesteś we właściwym miejscu. Powiedz nam, jakie tytuły 
@@ -37,11 +37,11 @@ export default function HomePage() {
                     ci zaskakująco wnikliwe rekomendacje.
                 </p>
             </div>
-            <div className="bg-[var(--background2)] mx-auto w-[40vw] h-100% rounded-xl p-9 text-[1.5vw]">
+            <div className="bg-[var(--background2)] mx-auto sm:w-[40vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[3.5vw] sm:my-0 my-3">
                 
-                    <h2><b>Zapraszamy do biblioteki!</b></h2>
-                    <span >Szukasz spokojnego miejsca, gdzie możesz popracować, pouczyć się albo spędzić czas z kolegami? Biblioteka to idealne miejsce</span><br></br>
-                    <span>Możesz przyjść sam albo z grupą znajomych. Oferujemy:</span>
+                    <h2><b>Zapraszamy do biblioteki!</b></h2><br></br>
+                    <span >Szukasz spokojnego miejsca, gdzie możesz popracować, pouczyć się albo spędzić czas z kolegami? Biblioteka to idealne miejsce!</span><br></br>
+                    <span>Możesz przyjść sam albo z grupą znajomych.</span><br></br>
                     {/* <ul className="list-disc px-4 ">
 
                         <li>ciche strefy do nauki i pracy</li>
@@ -53,8 +53,7 @@ export default function HomePage() {
                         <li>przyjazną atmosferę sprzyjającą zarówno skupieniu, jak i rozmowie</li>
                     </ul> */}
 
-                    <span>Nie trzeba się zapisywać — wystarczy przyjść.
-                    Do zobaczenia w bibliotec</span>
+                    <span>Nie trzeba się zapisywać — wystarczy przyjść</span>
                
             </div>
            
