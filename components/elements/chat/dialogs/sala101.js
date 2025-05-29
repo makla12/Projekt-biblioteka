@@ -91,9 +91,13 @@ const dialogsSala101 = [
         isInput: false,
         path: "/sala/101",
         ifHas: ["sala101_opisana"],
-        ifNotHas: ["sala101_laptop_odblokowany_os"],
+        // ifNotHas: ["sala101_laptop_odblokowany_os"],
         priority: 1,
         actions: [
+            () => checkInventory("sala101_laptop_odblokowany_os", [
+                () => message("Jestem przy laptopie."),
+                () => goToDialogPath("/sala/101/laptop_pulpit"),
+            ]),
             () => message("Jestem przy laptopie. Wygląda na dość stary model, ale jest włączony i wyświetla ekran logowania systemu. Prosi o hasło."),
             () => goToDialogPath("/sala/101/laptop_os_login"),
         ]
@@ -114,21 +118,12 @@ const dialogsSala101 = [
                 ],
                 fail: [
                     () => message(`Niestety, hasło "${messageInput.toUpperCase().trim()}" jest nieprawidłowe. System nadal zablokowany. Może te symbole pierwiastków (Og, Ni, W, O) i notatka o 'Chemicznych Kalamburach' coś podpowiedzą?`),
-                    () => goToDialogPath("/sala/101/laptop_os_login"),
+                    () => goToDialogPath("/sala/101"),
                 ],
             }),
         ]
     },
-    {
-        description: "Odejdź od laptopa (zostaw logowanie na później).",
-        isInput: false,
-        path: "/sala/101/laptop_os_login",
-        priority: 2,
-        actions: [
-            () => message("Okej, zostawiam na razie ten laptop."),
-            () => goToDialogPath("/sala/101"),
-        ]
-    },
+
 
     // --- Pulpit laptopa (po odblokowaniu systemu) ---
     {
@@ -167,7 +162,7 @@ const dialogsSala101 = [
     {
         description: "Wpisz hasło do aplikacji:",
         isInput: true,
-        path: "/sala/101/app_login",
+        path: "/sala/101/app_login_input",
         priority: 1,
         actions: [
             ({messageInput}) => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Niestety, nieprawidłowe hasło do aplikacji. Może spróbuj opcji 'Zapomniałem hasła'?`),
@@ -194,6 +189,15 @@ const dialogsSala101 = [
             () => goToDialogPath("/sala/101/laptop_pulpit"),
         ]
     },
+    {
+        description: "Wpisz hasło",
+        isInput: false,
+        path: "/sala/101/app_login",
+        priority: 3,
+        actions: [
+            () => goToDialogPath("/sala/101/app_login_input"),
+        ]
+    },
 
     // --- Odzyskiwanie hasła do aplikacji (pytanie o detektywa) ---
     {
@@ -204,7 +208,7 @@ const dialogsSala101 = [
         actions: [
             ({messageInput}) => solvePuzzle("HOLM", messageInput.toUpperCase().trim().replace("IUM", ""), {
                 success: [
-                    () => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Chwila... System przyjął odpowiedź! Hasło do aplikacji zostało zresetowane/dostęp przyznany!`),
+                    () => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Chwila... System przyjął odpowiedź! Dostęp przyznany!`),
                     () => message("Aplikacja 'Dziennik Badań Chemicznych' się otworzyła. Na ekranie jest tylko jedna notatka: 'Klucz do sukcesu spoczywa tam, gdzie spoczywają stare eksperymenty - szuflada nr 1 pod stołem z laptopem. Kod dostępu: suma cyfr roku bitwy pod Grunwaldem.'"),
                     () => giveItem("sala101_app_odblokowana_info_o_szufladzie"),
                     () => message("Szybko sprawdzam szufladę nr 1 pod stołem... Jest! Otworzyła się po wpisaniu kodu (1410 -> 1+4+1+0=6)! A w środku... kolejny kawałek karty!"),
@@ -217,15 +221,6 @@ const dialogsSala101 = [
                     () => goToDialogPath("/sala/101/app_forgot_password"),
                 ],
             }),
-        ]
-    },
-    {
-        description: "Wróć do próby logowania do aplikacji.",
-        isInput: false,
-        path: "/sala/101/app_forgot_password",
-        priority: 2,
-        actions: [
-            () => goToDialogPath("/sala/101/app_login"),
         ]
     },
 
