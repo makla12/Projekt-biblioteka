@@ -28,7 +28,7 @@ export default function HomePage() {
 
         </div>
 
-        <div className="w-full h-auto bg-blue-800  text-center py-7">
+        <div className="w-full h-auto text-white bg-blue-800  text-center py-7">
 
             <h1 className="w-full text-5xl font-bold ">
                 Biblioteka z Energią!
@@ -38,7 +38,7 @@ export default function HomePage() {
 
         <div className="h-auto flex justify-between sm:flex-row flex-col py-6">
 
-            <div className="bg-[var(--background2)] mx-auto sm:w-[40vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[3.5vw] sm:my-0 my-3">
+            <div className="bg-[var(--background2)] mx-auto sm:w-[40vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[4.5vw] sm:my-0 my-3">
                 <p>
                     <b>Decydujesz, co przeczytać w następnej kolejności?</b><br></br><br></br>
                     Jesteś we właściwym miejscu. Powiedz nam, jakie tytuły 
@@ -47,7 +47,7 @@ export default function HomePage() {
                 </p>
             </div>
 
-            <div className="bg-[var(--background2)] mx-auto sm:w-[40vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[3.5vw] sm:my-0 my-3">
+            <div className="bg-[var(--background2)] mx-auto sm:w-[40vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[4.5vw] sm:my-0 my-3">
                 <h2><b>Zapraszamy do biblioteki!</b></h2><br></br>
                 <span >Szukasz spokojnego miejsca, gdzie możesz popracować, pouczyć się albo spędzić czas z kolegami? Biblioteka to idealne miejsce!</span><br></br>
                 <span>Możesz przyjść sam albo z grupą znajomych.</span><br></br>
@@ -56,7 +56,7 @@ export default function HomePage() {
 
         </div>
 
-        <div className="w-full h-auto bg-blue-800  text-center py-7">
+        <div className="w-full h-auto text-white bg-blue-800 text-center py-7">
 
             <h1 className="w-full text-5xl font-bold ">
                 Nowość!
@@ -67,7 +67,8 @@ export default function HomePage() {
         <div className="flex sm:flex-row flex-col my-[4vh]">
             <div>
 
-                <div className="bg-[var(--background2)] rounded-xl sm:w-[50vw] w-[90vw] h-[20vh] sm:ml-[20vh] mx-auto p-9 sm:text-[1.5vw] text-[3.5vw] ">
+                <div className="bg-[var(--background2)] rounded-xl sm:w-[50vw] w-[90vw] h-[20vh] sm:ml-[20vh] mx-auto px-9 pt-2 pb-7 sm:text-[1.5vw] text-[4.5vw] ">
+                    <p className="text-center"><b>Cytaty</b></p>
                     <Quotes></Quotes>
                 </div>
 
@@ -77,7 +78,7 @@ export default function HomePage() {
 
             </div>
 
-            <div className="bg-[var(--background2)] mx-auto sm:w-[30vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[3.5vw] sm:my-0 my-3">
+            <div className="bg-[var(--background2)] mx-auto sm:w-[30vw] w-[90vw] h-100% rounded-xl p-9 sm:text-[1.5vw] text-[4.5vw] sm:my-0 my-3">
 
                 <h2><b>Zapraszamy do biblioteki!</b></h2><br></br>
                 <span >Szukasz spokojnego miejsca, gdzie możesz popracować, pouczyć się albo spędzić czas z kolegami? Biblioteka to idealne miejsce!</span><br></br>

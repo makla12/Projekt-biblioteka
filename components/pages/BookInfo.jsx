@@ -40,9 +40,10 @@ export default function BookInfo({ title, author, date, type, rating, about, rev
                     <div className="mt-12 sm:px-12 px2">
                         <div className="text-3xl font-bold mb-10">Recenzje({reviews.length}):</div>
 
-                        <div className="flex flex-col gap-8 ">
+                        <div className="flex flex-col gap-8">
                             {reviews.map( (value, index) => <Review key={index} {...value}/> )}
                         </div>
+                        
                     </div>
                 </div>
             </div>
