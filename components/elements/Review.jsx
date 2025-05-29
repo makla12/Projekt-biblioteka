@@ -1,7 +1,7 @@
 export default function Review({ user, date, rating, review, reversed = false }){
     return(
     <>
-        <div className="sm:w-[80%] w-[100%] sm:h-40 h-auto bg-[var(--background2)] p-2">
+        <div className="sm:w-[80%] w-[100%] sm:h-40 h-auto bg-[var(--background2)] p-3 rounded-lg">
             <div className="flex justify-between">
                 <div className="flex items-center gap-2">
                     <div className="text-2xl font-bold">{user}</div>
