@@ -68,7 +68,7 @@ export default function Chat() {
     return (
         <>
             <div className="w-full h-full felx flex-col-reverse justify-end p-2">
-                <div className="w-full h-[83vh] overflow-y-auto flex flex-col-reverse gap-y-1 chatScroll bg-opacity-15 bg-zinc-300 rounded-3xl p-px pb-2">
+                <div className="w-full sm:h-[83vh] h-[77vh] overflow-y-auto flex flex-col-reverse gap-y-1 chatScroll bg-opacity-15 bg-zinc-300 rounded-3xl p-px pb-2">
                     {!chatMessages ? null :
                         reverseArray(chatMessages).map((value, index) => (
                             <ChatBooba key={index} {...value} />
