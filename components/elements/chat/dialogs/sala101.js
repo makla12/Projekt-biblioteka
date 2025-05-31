@@ -15,12 +15,11 @@ const dialogsSala101 = [
         ]
     },
     {
-        description: "Rozejrzyj się dokładniej po stołach laboratoryjnych.",
+        description: "Rozejrzyj się po stołach laboratoryjnych.",
         isInput: false,
         path: "/sala/101",
         ifHas: ["sala101_opisana"], // Dopiero po ogólnym opisie
-        // USUNIĘTO ifNotHas: ["sala101_symbole_znalezione", "sala101_wskazowka_kalambury_znaleziona"]
-        priority: 1,
+        priority: 2,
         actions: [
             () => message("Przyglądam się stołom... Na jednym, trochę na uboczu, leżą jakieś pocięte karteczki z symbolami. A na innym, obok palnika Bunsena, widzę jakąś starą notatkę."),
             () => goToDialogPath("/sala/101/stoly_laboratoryjne"), // Podścieżka do wyboru, co zbadać
@@ -35,19 +34,19 @@ const dialogsSala101 = [
         ifNotHas: ["sala101_symbole_znalezione"],
         priority: 1,
         actions: [
-            () => message("Podnoszę te karteczki. Są na nich symbole pierwiastków: Og, Ni, W, O. Wyglądają jak elementy jakiejś układanki."),
+            () => message("Podnoszę te karteczki. Są na nich symbole pierwiastków: Ni, O, W, Og. Wyglądają jak elementy jakiejś układanki."),
             () => giveItem("sala101_symbole_znalezione"),
             () => goToDialogPath("/sala/101/stoly_laboratoryjne"), // Pozostajemy, aby móc sprawdzić drugą rzecz lub wrócić
         ]
     },
     {
-        description: "Przypomnij mi, co było na karteczkach z symbolami.", // Opcja przypomnienia
+        description: "Co było na tych pociętych karteczkach?", // Opcja przypomnienia
         isInput: false,
         path: "/sala/101/stoly_laboratoryjne",
         ifHas: ["sala101_symbole_znalezione"],
-        priority: 2, // Niższy priorytet niż pierwsze znalezienie
+        priority: 2, 
         actions: [
-            () => message("Jasne, na tych karteczkach były symbole pierwiastków: Og, Ni, W, O."),
+            () => message("Na karteczkach były symbole pierwiastków: Ni, O, W, Og."),
             () => goToDialogPath("/sala/101/stoly_laboratoryjne"),
         ]
     },
@@ -58,19 +57,19 @@ const dialogsSala101 = [
         ifNotHas: ["sala101_wskazowka_kalambury_znaleziona"],
         priority: 1,
         actions: [
-            () => message("Biorę tę notatkę. Jest trochę pożółkła. Ma nagłówek 'Chemiczne Kalambury' i są tu przykłady: symbole B, Al, O, N ułożone w słowo BALON, a potem K, O, Ti jako KOT. Ktoś tu chyba lubił takie łamigłówki... To musi być wskazówka, jak podejść do tych symboli, które widziałem wcześniej!"),
+            () => message("Biorę tę notatkę. Jest trochę pożółkła. Ma nagłówek 'Chemiczne Kalambury' i jest tu przykład: symbole O, N, Al, B ułożone w słowo BALON. Ktoś tu chyba lubił takie łamigłówki."),
             () => giveItem("sala101_wskazowka_kalambury_znaleziona"),
             () => goToDialogPath("/sala/101/stoly_laboratoryjne"), // Pozostajemy
         ]
     },
     {
-        description: "Co było napisane na tej notatce o 'Chemicznych Kalamburach'?", // Opcja przypomnienia
+        description: "Co było napisane na tej notatce?", // Opcja przypomnienia
         isInput: false,
         path: "/sala/101/stoly_laboratoryjne",
         ifHas: ["sala101_wskazowka_kalambury_znaleziona"],
         priority: 2,
         actions: [
-            () => message("Na tej notatce był nagłówek 'Chemiczne Kalambury' i przykłady: B, Al, O, N jako BALON oraz K, O, Ti jako KOT. To na pewno podpowiedź do ułożenia słowa z tych naszych symboli: Og, Ni, W, O."),
+            () => message("Na tej notatce był nagłówek 'Chemiczne Kalambury' i przykład: O, N, Al, B jako BALON."),
             () => goToDialogPath("/sala/101/stoly_laboratoryjne"),
         ]
     },
@@ -78,7 +77,7 @@ const dialogsSala101 = [
         description: "Wróć do rozglądania się po sali.",
         isInput: false,
         path: "/sala/101/stoly_laboratoryjne",
-        priority: 3, // Najniższy priorytet, jeśli inne opcje są dostępne
+        priority: 1, 
         actions: [
             () => message("Okej, odchodzę od tych stołów."),
             () => goToDialogPath("/sala/101"),
@@ -91,8 +90,8 @@ const dialogsSala101 = [
         isInput: false,
         path: "/sala/101",
         ifHas: ["sala101_opisana"],
-        // ifNotHas: ["sala101_laptop_odblokowany_os"],
-        priority: 1,
+        ifNotHas: ["kawalek_karty_101"], 
+        priority: 3,
         actions: [
             () => checkInventory("sala101_laptop_odblokowany_os", [
                 () => message("Jestem przy laptopie."),
@@ -117,7 +116,7 @@ const dialogsSala101 = [
                     () => goToDialogPath("/sala/101/laptop_pulpit"),
                 ],
                 fail: [
-                    () => message(`Niestety, hasło "${messageInput.toUpperCase().trim()}" jest nieprawidłowe. System nadal zablokowany. Może te symbole pierwiastków (Og, Ni, W, O) i notatka o 'Chemicznych Kalamburach' coś podpowiedzą?`),
+                    () => message(`Niestety, hasło "${messageInput.toUpperCase().trim()}" jest nieprawidłowe. System nadal zablokowany.`),
                     () => goToDialogPath("/sala/101"),
                 ],
             }),
@@ -127,21 +126,35 @@ const dialogsSala101 = [
 
     // --- Pulpit laptopa (po odblokowaniu systemu) ---
     {
-        description: "Co jest na pulpicie laptopa?",
+        description: "Sprawdź ikonę dokumenty.",
         isInput: false,
         path: "/sala/101/laptop_pulpit",
+        ifNotHas: ["sala101_laptop_dokumenty_sprawdzone"],
         priority: 2,
         actions: [
-            () => message("Na pulpicie są ikony 'Dokumenty', 'Internet' i ta specjalna aplikacja 'Dziennik Badań Chemicznych'."),
+            () => message("Nic ciekawego. Jedynie jakieś stare pliki z notatkami chemicznymi. I testy uczniów z czasów pandemi."),
+            () => giveItem("sala101_laptop_dokumenty_sprawdzone"),
             () => goToDialogPath("/sala/101/laptop_pulpit"),
         ]
     },
     {
-        description: "Uruchom aplikację 'Dziennik Badań Chemicznych'.",
+        description: "Sprawdź ikonę internet.",
+        isInput: false,
+        path: "/sala/101/laptop_pulpit",
+        ifNotHas: ["sala101_laptop_internet_sprawdzony"],
+        priority: 2,
+        actions: [
+            () => message("Jest to zwykła przeglądarka internetowa. Nic co nam się może przydać."),
+            () => giveItem("sala101_laptop_internet_sprawdzony"),
+            () => goToDialogPath("/sala/101/laptop_pulpit"),
+        ]
+    },
+    {
+        description: "Uruchom tą specjalną aplikację.",
         isInput: false,
         path: "/sala/101/laptop_pulpit",
         ifNotHas: ["sala101_szuflada_otwarta"],
-        priority: 1,
+        priority: 3,
         actions: [
             () => message("Uruchamiam 'Dziennik Badań Chemicznych'... Oho, wygląda na to, że jest dodatkowo zabezpieczona hasłem. Jest pole do wpisania i przycisk 'OK', a pod spodem mały link 'Zapomniałem/am hasła'."),
             () => goToDialogPath("/sala/101/app_login"),
@@ -151,7 +164,7 @@ const dialogsSala101 = [
         description: "Odejdź od laptopa.",
         isInput: false,
         path: "/sala/101/laptop_pulpit",
-        priority: 3,
+        priority: 1,
         actions: [
             () => message("Okej, odchodzę od laptopa."),
             () => goToDialogPath("/sala/101"),
@@ -165,7 +178,7 @@ const dialogsSala101 = [
         path: "/sala/101/app_login_input",
         priority: 1,
         actions: [
-            ({messageInput}) => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Niestety, nieprawidłowe hasło do aplikacji. Może spróbuj opcji 'Zapomniałem hasła'?`),
+            ({messageInput}) => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Niestety, nieprawidłowe hasło do aplikacji.`),
             () => goToDialogPath("/sala/101/app_login"),
         ]
     },
@@ -173,10 +186,9 @@ const dialogsSala101 = [
         description: "Kliknij 'Zapomniałem/am hasła'.",
         isInput: false,
         path: "/sala/101/app_login",
-        priority: 1,
+        priority: 2,
         actions: [
-            () => message("Kliknąłem/nęłam 'Zapomniałem hasła'. Pojawiło się pytanie pomocnicze: 'Jak nazywa się pierwiastek, który brzmi podobnie do nazwiska znanego detektywa?'. Pod spodem jest pole do wpisania odpowiedzi."),
-            () => message("No pięknie... Znowu coś, na czym kompletnie się nie znam. Książki i detektywi to nie moja bajka. Chyba będziesz musiał/a poszukać w bibliotece."),
+            () => message("Kliknąłem 'Zapomniałem hasła'. Pojawiło się pytanie pomocnicze: 'Jak nazywa się pierwiastek, który brzmi podobnie do nazwiska znanego detektywa?'. Pod spodem jest pole do wpisania odpowiedzi."),
             () => goToDialogPath("/sala/101/app_forgot_password"),
         ]
     },
@@ -184,7 +196,7 @@ const dialogsSala101 = [
         description: "Wróć do pulpitu laptopa.",
         isInput: false,
         path: "/sala/101/app_login",
-        priority: 2,
+        priority: 1,
         actions: [
             () => goToDialogPath("/sala/101/laptop_pulpit"),
         ]
@@ -201,39 +213,44 @@ const dialogsSala101 = [
 
     // --- Odzyskiwanie hasła do aplikacji (pytanie o detektywa) ---
     {
+        description: "Wpisz",
+        isInput: false,
+        path: "/sala/101/app_forgot_password",
+        priority: 3,
+        actions: [
+            () => goToDialogPath("/sala/101/app_forgot_password_input"),
+        ]
+    },
+    {
+        description: "Wróć do ekranu logowania.",
+        isInput: false,
+        path: "/sala/101/app_forgot_password",
+        priority: 1,
+        actions: [
+            () => message("Okej, wracam do ekranu logowania."),
+            () => goToDialogPath("/sala/101/app_login"),
+        ]
+    },
+    {
         description: "Wpisz odpowiedź na pytanie pomocnicze:",
         isInput: true,
-        path: "/sala/101/app_forgot_password",
+        path: "/sala/101/app_forgot_password_input",
         priority: 1,
         actions: [
             ({messageInput}) => solvePuzzle("HOLM", messageInput.toUpperCase().trim().replace("IUM", ""), {
                 success: [
                     () => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Chwila... System przyjął odpowiedź! Dostęp przyznany!`),
-                    () => message("Aplikacja 'Dziennik Badań Chemicznych' się otworzyła. Na ekranie jest tylko jedna notatka: 'Klucz do sukcesu spoczywa tam, gdzie spoczywają stare eksperymenty - szuflada nr 1 pod stołem z laptopem. Kod dostępu: suma cyfr roku bitwy pod Grunwaldem.'"),
-                    () => giveItem("sala101_app_odblokowana_info_o_szufladzie"),
-                    () => message("Szybko sprawdzam szufladę nr 1 pod stołem... Jest! Otworzyła się po wpisaniu kodu (1410 -> 1+4+1+0=6)! A w środku... kolejny kawałek karty!"),
+                    () => message("Aplikacja 'Dziennik Badań Chemicznych' się otworzyła. Na ekranie jest przycisk 'Otwórz szufladę nr 1'. Klikam go..."),
+                    () => message("Szybko sprawdzam szufladę nr 1 pod stołem... Jest! Otworzyła się. A w środku... kolejny kawałek karty!"),
                     () => giveItem("kawalek_karty_101"),
                     () => giveItem("sala101_szuflada_otwarta"),
                     () => goToDialogPath("/sala/101"),
                 ],
                 fail: [
-                    () => message(`Niestety, "${messageInput.toUpperCase().trim()}" to nie jest poprawna odpowiedź na pytanie pomocnicze. Musisz znaleźć w bibliotece książkę o słynnym detektywie i pomyśleć, który pierwiastek brzmi podobnie.`),
+                    () => message(`Niestety, "${messageInput.toUpperCase().trim()}" to nie jest poprawna odpowiedź na pytanie pomocnicze.`),
                     () => goToDialogPath("/sala/101/app_forgot_password"),
                 ],
             }),
-        ]
-    },
-
-    // === SALA 101 (/sala/101) - PO ROZWIĄZANIU ZAGADKI ===
-    {
-        description: "Co teraz? Zdobyliśmy kolejny kawałek karty.",
-        isInput: false,
-        path: "/sala/101",
-        ifHas: ["sala101_szuflada_otwarta"],
-        priority: 1,
-        actions: [
-            () => message("Świetna robota! Mamy już [X] kawałków karty. Gdzie idziemy szukać następnego? Została nam jeszcze sala 307, albo możemy wrócić do biblioteki, jeśli coś przeoczyliśmy."), // Placeholder [X] dla liczby kart
-            () => goToDialogPath("/sala/101/goto"),
         ]
     },
 
