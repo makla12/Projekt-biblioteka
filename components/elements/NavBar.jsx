@@ -6,7 +6,7 @@ export default function NavBar({ curentSiteId }){
 
     return (
     <>
-        <div className="w-full h-18 bg-[var(--background2)] flex flex-col justify-evenly items-center">
+        <div className="w-full h-18 bg-[var(--background2)] flex flex-row justify-center items-center">
             <Image src={logo} className="w-16 aspect-square" alt="Logo" />
             <div className="text-3xl text-blue-800 font-bold text-center">Electric library</div>
         </div>
