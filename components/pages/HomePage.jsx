@@ -78,7 +78,7 @@ export default function HomePage() {
                     <span>Od wieków ludzie używali szyfrów do ochrony swoich tajemnic. To fascynujący świat ukrywania znaczenia wiadomości,</span> 
                     <span>gdzie każda litera może skrywać coś więcej.</span><br></br>
                     <span>Jednym z najstarszych jest szyfr Cezara. Wyobraź sobie, że każdą literę w wiadomości przesuwasz o kilka miejsc w alfabecie</span>
-                    <span>– na przykład "A" staje się "D".</span>
+                    <span>- na przykład &quot;A&quot; staje się &quot;D&quot;.</span>
                     <span>Juliusz Cezar używał tej metody do tajnej korespondencji!</span> 
                     <span>Aby odczytać taką wiadomość, trzeba znać sekretne przesunięcie.</span>
 
