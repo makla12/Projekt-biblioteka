@@ -36,6 +36,10 @@ const dialogsSala307 = [
         priority: 1, 
         actions: [
             () => message("Na kartce było napisane: \"10010 niech ta liczba cię poprowadzi\""),
+            () => checkInventory("sala307_komputer_uruchomiony", [
+                () => message("Wydaje mi się, że już się to nam nie przyda"),
+                () => goToDialogPath("/sala/307"),
+            ]),
             () => goToDialogPath("/sala/307"),
         ]
     },
@@ -43,11 +47,13 @@ const dialogsSala307 = [
         description: "Podejdź do komputera",
         isInput: false,
         path: "/sala/307",
+        ifHas: ["sala307_opisana"],
+        ifNotHas: ["sala307_zagadka_rozwiazana"],
         priority: 3,
         actions: [
             () => checkInventory("sala307_komputer_uruchomiony", [
                 () => message("Okej podchodzę do tego działającego komputera"),
-                () => goToDialogPath("/sala/307/komputer_z_hasla")
+                () => goToDialogPath("/sala/307/komputer_z_haslem")
             ]),
             () => message("Okej ale do którego"), 
             () => goToDialogPath("/sala/307/podaj_numer_komputera"),
@@ -61,7 +67,7 @@ const dialogsSala307 = [
         path: "/sala/307/podaj_numer_komputera",
         priority: 1,
         actions: [
-            ({messageInput}) => solvePuzzle("3", messageInput.trim().toLowerCase(), {
+            ({messageInput}) => solvePuzzle("18", messageInput.trim().toLowerCase(), {
                 success: [
                     () => message(`OK, podchodzę do komputera oznaczonego numerem ${messageInput.trim()}. Spróbuję go włączyć...`),
                     () => message("Udało się! Ten komputer się uruchomił, podczas gdy inne milczą. System startuje... ale jest zablokowany hasłem."),
@@ -102,6 +108,16 @@ const dialogsSala307 = [
         ]
     },
     {
+        description: "Odejdź od komputera.",
+        isInput: false,
+        path: "/sala/307/komputer_z_haslem",
+        priority: 1,
+        actions: [
+            () => message("Dobra, odchodzę od tego komputera."),
+            () => goToDialogPath("/sala/307"),
+        ]
+    },
+    {
         description: "W jaki dokładnie sposób mryga ta dioda",
         isInput: false,
         path: "/sala/307/komputer_z_haslem",
@@ -116,7 +132,7 @@ const dialogsSala307 = [
             // E = . (krótko)
             // M = -- (długo-długo)
             // Dla przykładu uproszczona sekwencja, np. dla słowa "TEST" (długo / krótko / krótko-krótko-krótko / długo)
-            () => message("OK. Obserwuję uważnie. To jest tak: długie mignięcie, potem krótkie, potem trzy krótkie mignięcia, i na końcu znów długie mignięcie. Potem jest dłuższa przerwa i sekwencja się powtarza"),
+            () => message("OK. Obserwuję uważnie. To jest tak: trzy krótkie, potem długie krótkie i dwa długie, potem trzy krótkie, potem długie, potem krótkie, i na końcu dwa długie. Potem jest dłuższa przerwa i sekwencja się powtarza"),
             () => message("Nie mam pojęcia, co to może być, ale jest bardzo regularne."),
             () => goToDialogPath("/sala/307/komputer_z_haslem"),
         ]
@@ -141,7 +157,7 @@ const dialogsSala307 = [
         priority: 1,
         actions: [
             // Załóżmy, że miganie (długie, krótkie, krótkie-krótkie-krótkie, długie) to "TEST"
-            ({messageInput}) => solvePuzzle("TEST", messageInput.toUpperCase().trim(), {
+            ({messageInput}) => solvePuzzle("SYSTEM", messageInput.toUpperCase().trim(), {
                 success: [
                     () => message(`Wpisuję "${messageInput.toUpperCase().trim()}"... Tak! Zalogowałem się! Komputer odblokowany!`),
                     () => message("Na pulpicie jest tylko jeden plik wykonywalny, nazywa się 'DOSTEP_CD.exe'."),
