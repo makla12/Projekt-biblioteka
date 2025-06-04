@@ -1,4 +1,5 @@
 import { message, goToDialogPath, giveItem, checkInventory, solvePuzzle } from "./dialogFunctions";
+import { endMessages } from "./endDialog";
 
 const dialogsSala307 = [
 
@@ -36,7 +37,7 @@ const dialogsSala307 = [
         priority: 1, 
         actions: [
             () => message("Na kartce było napisane: \"10010 niech ta liczba cię poprowadzi\""),
-            () => checkInventory("sala307_komputer_uruchomiony", [
+            () => checkInventory(["sala307_komputer_uruchomiony"], [
                 () => message("Wydaje mi się, że już się to nam nie przyda"),
                 () => goToDialogPath("/sala/307"),
             ]),
@@ -51,7 +52,7 @@ const dialogsSala307 = [
         ifNotHas: ["sala307_zagadka_rozwiazana"],
         priority: 3,
         actions: [
-            () => checkInventory("sala307_komputer_uruchomiony", [
+            () => checkInventory(["sala307_komputer_uruchomiony"], [
                 () => message("Okej podchodzę do tego działającego komputera"),
                 () => goToDialogPath("/sala/307/komputer_z_haslem")
             ]),
@@ -181,9 +182,10 @@ const dialogsSala307 = [
         priority: 1,
         actions: [
             () => message("Uruchamiam 'DOSTEP_CD.exe'... Chwilę coś przetwarzało... Słyszę mechaniczny dźwięk! Tacka napędu CD-ROM w tym komputerze właśnie się wysunęła!"),
-            () => message("A w środku, na tacce, leży... tak! Kolejny kawałek karty!"),
-            () => giveItem("kawalek_karty_307"),
+            () => message("A w środku, na tacce, leży... tak! Kawałek karty!"),
             () => giveItem("sala307_zagadka_rozwiazana"), // Flaga ogólna dla sali
+            () => giveItem("kawalek_karty_307"),
+            ...endMessages,
             () => goToDialogPath("/sala/307"), // Powrót do głównego widoku sali
         ]
     },
