@@ -63,9 +63,9 @@ const giveItem = (item) => {
     return [false, [functionAfter]];
 };
 
-const checkInventory = (item, actions) => {
+const checkInventory = (items, actions) => {
     const inventory = JSON.parse(getCookie("inventory")).inv;
-    if(inventory.includes(item)) {
+    if (items.every(item => inventory.includes(item))) {
         return [true, executeActions(actions)];
     } else {
         return [false, []];

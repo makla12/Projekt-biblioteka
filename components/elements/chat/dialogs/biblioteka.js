@@ -21,10 +21,11 @@ const dialogsBiblioteka = [
         ifNotHas: ["drzwi_otwarte"],
         priority: 1,
         actions: [
-            () => checkInventory("klucz_do_biblioteki", [
+            () => checkInventory(["klucz_do_biblioteki"], [
                 () => message("Mam ten klucz! Spróbuję go użyć..."),
                 () => message("Pasuje! Przekręcam... Drzwi otwarte! Możemy iść dalej!"),
                 () => giveItem("drzwi_otwarte"),
+                () => message("Niestety główne drzwi od szkoły są zamknięte a ja zapomniałem dzisiaj karty magnetycznej do otworzenia ich może znajdziemy jakąś w szkole"),
                 () => goToDialogPath("/biblioteka"),
             ]),
             () => message("Już próbowałem chyba z tysiąc razy! Ani drgną. Ten zamek wygląda solidnie. Musi być jakiś inny sposób... Może jakiś kod? Albo klucz ukryty gdzieś tutaj?"),

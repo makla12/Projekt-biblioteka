@@ -1,4 +1,5 @@
 import { message, goToDialogPath, giveItem, checkInventory, solvePuzzle } from "./dialogFunctions";
+import { endMessages } from "./endDialog";
 
 const dialogsSala101 = [
     // === SALA 101 (/sala/101) - WEJŚCIE I PODSTAWOWA EKSPLORACJA ===
@@ -93,7 +94,7 @@ const dialogsSala101 = [
         ifNotHas: ["kawalek_karty_101"], 
         priority: 3,
         actions: [
-            () => checkInventory("sala101_laptop_odblokowany_os", [
+            () => checkInventory(["sala101_laptop_odblokowany_os"], [
                 () => message("Jestem przy laptopie."),
                 () => goToDialogPath("/sala/101/laptop_pulpit"),
             ]),
@@ -241,9 +242,10 @@ const dialogsSala101 = [
                 success: [
                     () => message(`Wpisałem/am "${messageInput.toUpperCase().trim()}"... Chwila... System przyjął odpowiedź! Dostęp przyznany!`),
                     () => message("Aplikacja 'Dziennik Badań Chemicznych' się otworzyła. Na ekranie jest przycisk 'Otwórz szufladę nr 1'. Klikam go..."),
-                    () => message("Szybko sprawdzam szufladę nr 1 pod stołem... Jest! Otworzyła się. A w środku... kolejny kawałek karty!"),
+                    () => message("Szybko sprawdzam szufladę nr 1 pod stołem... Jest! Otworzyła się. A w środku... kawałek karty!"),
                     () => giveItem("kawalek_karty_101"),
                     () => giveItem("sala101_szuflada_otwarta"),
+                    ...endMessages,
                     () => goToDialogPath("/sala/101"),
                 ],
                 fail: [

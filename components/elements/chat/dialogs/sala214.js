@@ -1,4 +1,5 @@
 import { message, goToDialogPath, giveItem, checkInventory, solvePuzzle } from "./dialogFunctions";
+import { endMessages } from "./endDialog";
 
 const dialogsSala214 = [
     // === SALA 214 (/sala/214) - WEJŚCIE I PODSTAWOWA EKSPLORACJA ===
@@ -22,7 +23,7 @@ const dialogsSala214 = [
         priority: 2,
         actions: [
             () => message("Pierwszy obraz to zwykły pałac nic specjalnego. Drugi obraz to portret Juliusza Cezara. Standardowy portret, ale w rogu jest wyryty numer 'III' może to coś ważnego"),
-            () => checkInventory("sala214_pytanie_rozszyfrowane", [ // Używamy checkInventory, aby nie ukrywać opcji
+            () => checkInventory(["sala214_pytanie_rozszyfrowane"], [ 
                 () => message("Raczej to już się nam nie przyda."),
                 () => goToDialogPath("/sala/214"),
             ]),
@@ -64,7 +65,7 @@ const dialogsSala214 = [
         actions: [
             () => message("Jest na niej napisane: veni vidi vici. To chyba coś po łacinie, ale nie wiem co to znaczy. Może to jakaś podpowiedź do zagadki?"),
             () => giveItem("sala214_latin_sheet_read"),
-            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+            () => checkInventory(["sala214_pytanie_rozszyfrowane"], [
                 () => message("Wydaje mi się, że to już nie będzie nam potrzebne."),
                 () => goToDialogPath("/sala/214/biurko"),
             ]),
@@ -79,7 +80,7 @@ const dialogsSala214 = [
         priority: 2, // Niższy priorytet niż pierwszorazowe przeczytanie
         actions: [
             () => message("Na kartce jest napisane: veni vidi vici. Brzmi jak jakaś podpowiedź."),
-            () => checkInventory("sala214_pytanie_rozszyfrowane", [
+            () => checkInventory(["sala214_pytanie_rozszyfrowane"], [
                 () => message("Wydaje mi się, że to już nie będzie nam potrzebne."),
                 () => goToDialogPath("/sala/214/biurko"),
             ]),
@@ -145,7 +146,7 @@ const dialogsSala214 = [
                 success: [
                     () => message("Niesamowite! 'JAKA JEST DATA POWSTANIA SZKOŁY?' To musi być to! Teraz tylko trzeba znaleźć tę datę..."),
                     () => giveItem("sala214_pytanie_rozszyfrowane"),
-                    () => checkInventory("elektryk_1965_sheet_read", [
+                    () => checkInventory(["elektryk_1965_sheet_read"], [
                         () => message("Chwila... pamiętam tę kartkę z biurka w bibliotece! Było na niej 'ELEKTRYK-1965'!"),
                         () => goToDialogPath("/sala/214"),
                     ]),
@@ -182,7 +183,7 @@ const dialogsSala214 = [
         ifHas: ["sala214_pytanie_rozszyfrowane"],
         ifNotHas: ["sala214_szafka_otwarta"],
         actions: [
-            () => checkInventory("elektryk_1965_sheet_read", [
+            () => checkInventory(["elektryk_1965_sheet_read"], [
                 () => message("Pamiętasz tę kartkę z biurka w bibliotece? Było na niej 'ELEKTRYK-1965' i dopisek 'pamiętaj o dacie od której wszystko się zaczeło'."),
                 () => goToDialogPath("/sala/214"),
             ]),
@@ -202,9 +203,10 @@ const dialogsSala214 = [
             ({messageInput}) => solvePuzzle("1965", messageInput.trim(), {
                 success: [
                     () => message(`Wpisuję ${messageInput}... Słychać szczęk metalu... Kłódka otwarta! Udało się!`),
-                    () => message("W środku szafki jest... tak! Kolejny kawałek jakiejś karty! Jest na nim fragment jakiegoś symbolu lub mapy."),
+                    () => message("W środku szafki jest... tak! Kawałek karty magnetycznej! "),
                     () => giveItem("kawalek_karty_214"),
                     () => giveItem("sala214_szafka_otwarta"),
+                    ...endMessages,
                     () => goToDialogPath("/sala/214"), // Powrót do głównej sali
                 ],
                 fail: [
