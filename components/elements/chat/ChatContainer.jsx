@@ -1,11 +1,18 @@
 'use client'
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import chatIcon from "@/public/chat.svg"
 import Chat from "./Chat";
+import AlertBox, { showAlertBox } from "../AlertBox";
+
+function clearChatHistory() {
+    document.cookie = "chatHistory=;";
+    window.location.reload();
+}
 
 export default function ChatContainer(){
+    const alertRef = useRef(null);
     const [isShown, setIsShown] = useState(false);
 
     return(
@@ -28,9 +35,21 @@ export default function ChatContainer(){
             z-20 w-full h-full sm:w-[30rem] fixed right-0 top-0 flex flex-col items-end p-1
             sm:rounded-s-lg bg-blue-500 dark:bg-blue-700 transition-transform duration-500 overflow-y-auto ${!isShown ? "translate-x-full" : "translate-x-0"}`}
         >
-            <div className="w-10 aspect-square bg-red-700 rounded-lg right-1 top-1 cursor-pointer flex justify-center items-center font-bold text-xl text-white" onClick={()=>setIsShown(false)}>X</div>
+            <div className="p-1 flex gap-10">
+                <div 
+                    className="w-10 aspect-square bg-black rounded-lg cursor-pointer flex justify-center items-center font-bold text-xl text-white" 
+                    onClick={() => showAlertBox(alertRef)}
+                >R</div>
+
+                <div 
+                    className="w-10 aspect-square bg-red-700 rounded-lg cursor-pointer flex justify-center items-center font-bold text-xl text-white" 
+                    onClick={()=>setIsShown(false)}
+                >X</div>
+            </div>
             <Chat />
         </div>
+
+        <AlertBox onAccept={clearChatHistory} alertRef={alertRef} />
     </>
     );
 }
