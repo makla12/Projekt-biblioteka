@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import chatIcon from "@/public/chat.svg"
+import ResetIcon from "@/public/rollback.svg"
 import Chat from "./Chat";
 import AlertBox, { showAlertBox } from "../AlertBox";
 
@@ -37,9 +38,11 @@ export default function ChatContainer(){
         >
             <div className="p-1 flex gap-10">
                 <div 
-                    className="w-10 aspect-square bg-black rounded-lg cursor-pointer flex justify-center items-center font-bold text-xl text-white" 
+                    className="w-10 aspect-square bg-[--background2] rounded-lg cursor-pointer flex justify-center items-center font-bold text-xl text-white" 
                     onClick={() => showAlertBox(alertRef)}
-                >R</div>
+                >
+                    <Image src={ResetIcon} className="h-auto w-[80%] dark:invert"></Image>
+                </div>
 
                 <div 
                     className="w-10 aspect-square bg-red-700 rounded-lg cursor-pointer flex justify-center items-center font-bold text-xl text-white" 
