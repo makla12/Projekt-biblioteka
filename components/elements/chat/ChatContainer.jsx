@@ -41,7 +41,7 @@ export default function ChatContainer(){
                     className="w-10 aspect-square bg-[--background2] rounded-lg cursor-pointer flex justify-center items-center font-bold text-xl text-white" 
                     onClick={() => showAlertBox(alertRef)}
                 >
-                    <Image src={ResetIcon} className="h-auto w-[80%] dark:invert"></Image>
+                    <Image src={ResetIcon} alt="" className="h-auto w-[80%] dark:invert"></Image>
                 </div>
 
                 <div 
