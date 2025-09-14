@@ -11,7 +11,7 @@ export default function NavBar({ curentSiteId }){
             <div className="text-3xl text-blue-800 font-bold text-center">Electric library</div>
         </div>
 
-        <div className="w-full h-11 bg-[var(--background2)] flex flex-col justify-evenly items-center sticky top-0 border-b-2 border-dashed border-blue-800">
+        <div className="w-full h-11 bg-[var(--background2)] flex flex-col justify-evenly items-center sticky top-0 border-b-2 border-dashed border-blue-800 z-10">
             <div className="flex sm:gap-5 gap-2 text-lg font-bold text-center  ">
                 <Link href="/" className={(curentSiteId == 0 ? "text-blue-600" : null)}> Strona główna </Link>
 
