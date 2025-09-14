@@ -6,9 +6,13 @@ import chatIcon from "@/public/chat.svg"
 import ResetIcon from "@/public/rollback.svg"
 import Chat from "./Chat";
 import AlertBox, { showAlertBox } from "../AlertBox";
+import { firstMessages } from "./dialogs/dialogs";
 
 function clearChatHistory() {
-    document.cookie = "chatHistory=;";
+    localStorage.setItem("chatHistory", JSON.stringify({hist:firstMessages}));
+    localStorage.setItem("location", "/startDialog");
+    localStorage.setItem("inventory", JSON.stringify({inv:[]}));
+
     window.location.reload();
 }
 
@@ -30,10 +34,10 @@ export default function ChatContainer(){
             <div className="w-[30%] h-[30%] bg-red-500 rounded-full absolute right-0 top-0"></div>
         </div>
 
-        <div onClick={()=>setIsShown(false)} className={`z-10 w-full h-[100vh] backdrop-blur-sm fixed right-0 top-0 ${!isShown ? "translate-x-full" : "translate-x-0"}`}></div>
+        <div onClick={()=>setIsShown(false)} className={`z-20 w-full h-[100vh] backdrop-blur-sm fixed right-0 top-0 ${!isShown ? "translate-x-full" : "translate-x-0"}`}></div>
         
         <div id="chat" className={`
-            z-20 w-full h-full sm:w-[30rem] fixed right-0 top-0 flex flex-col items-end p-1
+            z-30 w-full h-full sm:w-[30rem] fixed right-0 top-0 flex flex-col items-end p-1
             sm:rounded-s-lg bg-blue-500 dark:bg-blue-700 transition-transform duration-500 overflow-y-auto ${!isShown ? "translate-x-full" : "translate-x-0"}`}
         >
             <div className="p-1 flex gap-10">

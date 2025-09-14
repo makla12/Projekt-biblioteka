@@ -14,30 +14,23 @@ const reverseArray = (array) => {
 const arrayIncludesAll = (array, values) => values === undefined ? true : values.every((value) => array.includes(value));
 const arrayNotIncludesAll = (array, values) => values === undefined ? true : values.every((value) => !array.includes(value));
 
-function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+function setLocalStorage(name, value) {
+    localStorage.setItem(name, value);
 }
 
-function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
+function getLocalStorage(name) {
+    let value = localStorage.getItem(name);
+    if(value == "" || value == null) throw new Error("Data not Found");
+    return value;
 }
 
 const updateChatHistory = (obj) => {
-    setCookie("chatHistory", JSON.stringify({ hist: [...JSON.parse(getCookie("chatHistory")).hist, obj] }));
+    try{
+        setLocalStorage("chatHistory", JSON.stringify({ hist: [...JSON.parse(getLocalStorage("chatHistory")).hist, obj] }));
+    }
+    catch(error){
+        window.location.reload();
+    }
 }
 
 export default function Chat() {
@@ -54,15 +47,16 @@ export default function Chat() {
     }
 
     useEffect(() => {
-        if (getCookie("location").length == 0 || getCookie("inventory").length == 0 || getCookie("chatHistory").length == 0) {
-            setCookie("location", "/startDialog");
-            setCookie("inventory", JSON.stringify({ inv: [] }));
-            setCookie("chatHistory", JSON.stringify({ hist: firstMessages }));
+        try{
+            setDialogPath(getLocalStorage("location"));
+            setInventory(JSON.parse(getLocalStorage("inventory")).inv);
+            setChatMessages(JSON.parse(getLocalStorage("chatHistory")).hist);
         }
-
-        setDialogPath(getCookie("location"));
-        setInventory(JSON.parse(getCookie("inventory")).inv);
-        setChatMessages(JSON.parse(getCookie("chatHistory")).hist);
+        catch (error){
+            setLocalStorage("location", "/startDialog");
+            setLocalStorage("inventory", JSON.stringify({ inv: [] }));
+            setLocalStorage("chatHistory", JSON.stringify({ hist: firstMessages }));
+        }
     }, []);
 
     return (
