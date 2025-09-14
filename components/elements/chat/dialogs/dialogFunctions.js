@@ -1,40 +1,28 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
 const byteSize = str => new Blob([str]).size;
 
-function setCookie(cname, cvalue, exdays) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+function setLocalStorage(name, value) {
+    localStorage.setItem(name, value);
 }
 
-function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for(let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-        }
-    }
-    return "";
+function getLocalStorage(name) {
+    let value = localStorage.getItem(name);
+    if(value == "" || value == null) throw new Error("Data not Found");
+    return value;
 }
 
 const updateChatHistory = (obj) => {
-    let cookieObj = {hist: [...JSON.parse(getCookie("chatHistory")).hist, obj]};
+    let cookieObj = {hist: [...JSON.parse(getLocalStorage("chatHistory")).hist, obj]};
 
     while(byteSize(JSON.stringify(cookieObj)) > 4000) {
         cookieObj.hist.splice(0, 1);
     }
 
-    setCookie("chatHistory", JSON.stringify(cookieObj));
+    setLocalStorage("chatHistory", JSON.stringify(cookieObj));
 }
 
 const updateInventory = (obj) => {
-    setCookie("inventory", JSON.stringify({inv:[...JSON.parse(getCookie("inventory")).inv, obj]}));
+    setLocalStorage("inventory", JSON.stringify({inv:[...JSON.parse(getLocalStorage("inventory")).inv, obj]}));
 }
 
 const message = (message) => {
@@ -48,7 +36,7 @@ const message = (message) => {
 };
 
 const goToDialogPath = (path) => {
-    setCookie("location", path);
+    setLocalStorage("location", path);
     const functionAfter = async ({setDialogPath}) => {
         setDialogPath(path);
     }
@@ -64,7 +52,7 @@ const giveItem = (item) => {
 };
 
 const checkInventory = (items, actions) => {
-    const inventory = JSON.parse(getCookie("inventory")).inv;
+    const inventory = JSON.parse(getLocalStorage("inventory")).inv;
     if (items.every(item => inventory.includes(item))) {
         return [true, executeActions(actions)];
     } else {

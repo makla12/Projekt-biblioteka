@@ -6,9 +6,13 @@ import chatIcon from "@/public/chat.svg"
 import ResetIcon from "@/public/rollback.svg"
 import Chat from "./Chat";
 import AlertBox, { showAlertBox } from "../AlertBox";
+import { firstMessages } from "./dialogs/dialogs";
 
 function clearChatHistory() {
-    document.cookie = "chatHistory=;";
+    localStorage.setItem("chatHistory", JSON.stringify({hist:firstMessages}));
+    localStorage.setItem("location", "/startDialog");
+    localStorage.setItem("inventory", JSON.stringify({inv:[]}));
+
     window.location.reload();
 }
 
