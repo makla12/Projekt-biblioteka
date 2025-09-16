@@ -56,6 +56,9 @@ export default function Chat() {
             setLocalStorage("location", "/startDialog");
             setLocalStorage("inventory", JSON.stringify({ inv: [] }));
             setLocalStorage("chatHistory", JSON.stringify({ hist: firstMessages }));
+            setDialogPath("/startDialog");
+            setInventory([]);
+            setChatMessages(firstMessages);
         }
     }, []);
 
