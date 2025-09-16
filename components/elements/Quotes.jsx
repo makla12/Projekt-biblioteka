@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const Quotes = () => {
   const quotes = [
     "„Ludzie dobrze oczytani rzadziej są źli”. - Haruki Murakami",
-    "„Czytanie przynosi nam nieznanych przyjacirł”. - Honoré de Balzac",
+    "„Czytanie przynosi nam nieznanych przyjaciół”. - Honoré de Balzac",
     "„To właśnie to, co czytasz, kiedy nie musisz, decyduje o tym, jaki będziesz, kiedy nie będziesz mógł nic na to poradzić”. - Oscar Wilde",
     "„Pokój bez książek jest jak ciało bez duszy”. - Cyceron",
     "„Człowiek, który nie czyta dobrych książek, nie ma żadnej przewagi nad człowiekiem, który nie potrafi ich czytać”. - Mark Twain",
