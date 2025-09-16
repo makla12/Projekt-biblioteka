@@ -142,7 +142,7 @@ const dialogsSala214 = [
         path: "/sala/214/podaj_rozszyfrowana_wiadomosc",
         priority: 1,
         actions: [
-            ({messageInput}) => solvePuzzle("JAKA JEST DATA POWSTANIA SZKOLY", messageInput.toUpperCase().replace("?", "").trim(), {
+            ({messageInput}) => solvePuzzle("JAKA JEST DATA POWSTANIA SZKOLY", messageInput.toUpperCase().replace("?", "").replace("ł", "l").trim(), {
                 success: [
                     () => message("Niesamowite! 'JAKA JEST DATA POWSTANIA SZKOŁY?' To musi być to! Teraz tylko trzeba znaleźć tę datę..."),
                     () => giveItem("sala214_pytanie_rozszyfrowane"),
